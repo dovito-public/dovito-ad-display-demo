@@ -4,7 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import QRCode from "qrcode";
 import type { Slide } from "@/lib/schema";
 
-const dovitoLogo = "/assets/white_1750804660917.png";
+const BASE_PATH =
+  process.env.NODE_ENV === "production" ? "/dovito-ad-display-demo" : "";
+const dovitoLogo = `${BASE_PATH}/assets/white_1750804660917.png`;
 
 const qrCache = new Map<string, string>();
 
@@ -104,10 +106,6 @@ export default function UnifiedSlideDisplay({
           src={slide.advertisement_image_url}
           alt={`Advertisement for ${slide.business_name}`}
           className="w-full h-full object-cover"
-          style={{
-            border: '1% solid #000000',
-            boxSizing: 'border-box'
-          }}
           onError={() => setImageError(true)}
         />
       ) : (

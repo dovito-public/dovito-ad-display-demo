@@ -12,9 +12,10 @@ import {
   MOCK_HEARTBEAT,
 } from "./mock-data";
 
-// Bumped to v2 when the demo-image paths were prefixed with basePath; older
-// cached stores point at broken /demo-images/ URLs that 404 under GH Pages.
-const STORAGE_KEY = "dovito-demo-v2";
+// v3: display scale default changed 0.8 → 1 so the hero embed fills its
+// container; returning visitors need a reseed or they'll keep seeing the
+// old padded layout.
+const STORAGE_KEY = "dovito-demo-v3";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Store = { [k: string]: any };

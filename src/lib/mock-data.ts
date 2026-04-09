@@ -190,8 +190,8 @@ export const MOCK_SLIDES: Slide[] = Array.from({ length: 8 }, (_, i) => ({
 }));
 
 export const MOCK_DISPLAY_SETTINGS: DisplaySetting[] = [
-  { id: 1, setting_key: "scale", setting_value: 0.8, updated_at: daysAgo(10) },
-  { id: 2, setting_key: "padding", setting_value: 2, updated_at: daysAgo(10) },
+  { id: 1, setting_key: "scale", setting_value: 1, updated_at: daysAgo(10) },
+  { id: 2, setting_key: "padding", setting_value: 1, updated_at: daysAgo(10) },
   { id: 3, setting_key: "borderRadius", setting_value: "lg", updated_at: daysAgo(10) },
   { id: 4, setting_key: "maxWidth", setting_value: "4xl", updated_at: daysAgo(10) },
   { id: 5, setting_key: "captionSize", setting_value: "sm", updated_at: daysAgo(10) },
