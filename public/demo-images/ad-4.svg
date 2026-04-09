@@ -1,0 +1,44 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='xMidYMid slice'>
+<defs>
+<linearGradient id='bg3' x1='0%' y1='0%' x2='100%' y2='100%'>
+<stop offset='0%' stop-color='#e1f5fe'/>
+<stop offset='55%' stop-color='#4fc3f7'/>
+<stop offset='100%' stop-color='#0277bd'/>
+</linearGradient>
+</defs>
+<rect width='1920' height='1080' fill='url(#bg3)'/>
+<g opacity='0.05'>
+<circle cx='1600' cy='200' r='300' fill='#01579b'/>
+<circle cx='200' cy='900' r='400' fill='#01579b'/>
+</g>
+
+<g transform='translate(1450 420)'>
+<path d='M 0 280 Q -40 200 -30 140 Q -15 100 20 90 Q 60 80 90 110 Q 110 70 150 60 L 160 70 Q 130 90 120 120 Q 140 140 150 180 Q 145 230 100 260 Q 50 290 0 280 Z' fill='#01579b'/>
+<circle cx='135' cy='58' r='4' fill='#ffc107'/>
+<path d='M 155 68 L 200 55 L 160 75' fill='#ffb300'/>
+<ellipse cx='-30' cy='290' rx='180' ry='10' fill='#01579b' opacity='0.25'/>
+<path d='M -200 350 Q -100 330 0 340 Q 100 345 200 335' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.7'/>
+<path d='M -200 380 Q -80 360 40 370 Q 150 375 220 365' stroke='#ffffff' stroke-width='3' fill='none' opacity='0.5'/>
+</g>
+<rect x='80' y='80' width='110' height='6' fill='#01579b'/>
+<text x='80' y='140' font-family='Inter, sans-serif' font-size='28' font-weight='500' fill='#01579b' letter-spacing='4'>DOVITO AD DISPLAY</text>
+<text x='80' y='460' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#01579b' letter-spacing='-2'>Blue</text>
+<text x='80' y='580' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#01579b' letter-spacing='-2'>Heron Café</text>
+<text x='80' y='680' font-family='Inter, sans-serif' font-size='44' font-weight='400' fill='#01579b' opacity='0.85'>Specialty coffee · House-made pastries · Harbor views</text>
+<rect x='80' y='720' width='80' height='4' fill='#ffb300'/>
+<text x='80' y='780' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#01579b' letter-spacing='0.5'>Open 6am–3pm  ·  Waterfront Pier 4  ·  555-0113</text>
+<g transform='translate(80 960)'>
+<rect x='0' y='0' width='70' height='70' rx='4' fill='#01579b'/>
+<g fill='#ffb300'>
+<rect x='8' y='8' width='16' height='16'/>
+<rect x='46' y='8' width='16' height='16'/>
+<rect x='8' y='46' width='16' height='16'/>
+<rect x='30' y='30' width='8' height='8'/>
+<rect x='46' y='46' width='8' height='8'/>
+<rect x='46' y='30' width='8' height='4'/>
+<rect x='30' y='46' width='4' height='8'/>
+</g>
+</g>
+<text x='170' y='990' font-family='Inter, sans-serif' font-size='20' font-weight='500' fill='#01579b' opacity='0.7'>SCAN TO LEARN MORE</text>
+<text x='170' y='1018' font-family='Inter, sans-serif' font-size='16' fill='#01579b' opacity='0.5'>ads.dovito.com</text>
+</svg>

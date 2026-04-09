@@ -1,6 +1,8 @@
 "use client";
 
 import { Suspense, useState } from "react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { mockAuth } from "@/lib/mock-auth";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -25,7 +27,14 @@ function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--dovito-deep-blue))] via-[hsl(var(--dovito-navy))] to-[hsl(var(--dovito-steel-blue))] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[hsl(var(--dovito-deep-blue))] via-[hsl(var(--dovito-navy))] to-[hsl(var(--dovito-steel-blue))] py-12 px-4 sm:px-6 lg:px-8 relative">
+      <Link
+        href="/"
+        className="absolute top-16 left-6 inline-flex items-center gap-2 text-white/80 hover:text-white text-sm font-medium transition-colors"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to home
+      </Link>
       <Card className="w-full max-w-md shadow-2xl">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Admin Login</CardTitle>

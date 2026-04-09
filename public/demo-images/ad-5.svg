@@ -1,0 +1,43 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='xMidYMid slice'>
+<defs>
+<linearGradient id='bg4' x1='0%' y1='0%' x2='100%' y2='100%'>
+<stop offset='0%' stop-color='#ffffff'/>
+<stop offset='60%' stop-color='#e3f2fd'/>
+<stop offset='100%' stop-color='#bbdefb'/>
+</linearGradient>
+</defs>
+<rect width='1920' height='1080' fill='url(#bg4)'/>
+<g opacity='0.05'>
+<circle cx='1600' cy='200' r='300' fill='#0d47a1'/>
+<circle cx='200' cy='900' r='400' fill='#0d47a1'/>
+</g>
+
+<g transform='translate(1480 520)'>
+<path d='M 0 -160 Q -110 -160 -120 -60 Q -130 30 -90 90 Q -60 130 -40 90 Q -20 40 0 40 Q 20 40 40 90 Q 60 130 90 90 Q 130 30 120 -60 Q 110 -160 0 -160 Z' fill='#ffffff' stroke='#0d47a1' stroke-width='5'/>
+<path d='M -40 -80 Q -20 -100 0 -90' stroke='#0d47a1' stroke-width='4' fill='none' stroke-linecap='round'/>
+<circle cx='-160' cy='-80' r='30' fill='none' stroke='#00acc1' stroke-width='4'/>
+<circle cx='-160' cy='-80' r='6' fill='#00acc1'/>
+<path d='M 150 -140 L 190 -100 M 170 -140 L 170 -100 M 150 -120 L 190 -120' stroke='#0d47a1' stroke-width='6' stroke-linecap='round'/>
+</g>
+<rect x='80' y='80' width='110' height='6' fill='#0d47a1'/>
+<text x='80' y='140' font-family='Inter, sans-serif' font-size='28' font-weight='500' fill='#0d47a1' letter-spacing='4'>DOVITO AD DISPLAY</text>
+<text x='80' y='460' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#0d47a1' letter-spacing='-2'>Westside</text>
+<text x='80' y='580' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#0d47a1' letter-spacing='-2'>Dental</text>
+<text x='80' y='680' font-family='Inter, sans-serif' font-size='44' font-weight='400' fill='#0d47a1' opacity='0.85'>Gentle care for your whole family</text>
+<rect x='80' y='720' width='80' height='4' fill='#00acc1'/>
+<text x='80' y='780' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#0d47a1' letter-spacing='0.5'>New patients welcome  ·  220 West Ave  ·  555-0114</text>
+<g transform='translate(80 960)'>
+<rect x='0' y='0' width='70' height='70' rx='4' fill='#0d47a1'/>
+<g fill='#00acc1'>
+<rect x='8' y='8' width='16' height='16'/>
+<rect x='46' y='8' width='16' height='16'/>
+<rect x='8' y='46' width='16' height='16'/>
+<rect x='30' y='30' width='8' height='8'/>
+<rect x='46' y='46' width='8' height='8'/>
+<rect x='46' y='30' width='8' height='4'/>
+<rect x='30' y='46' width='4' height='8'/>
+</g>
+</g>
+<text x='170' y='990' font-family='Inter, sans-serif' font-size='20' font-weight='500' fill='#0d47a1' opacity='0.7'>SCAN TO LEARN MORE</text>
+<text x='170' y='1018' font-family='Inter, sans-serif' font-size='16' fill='#0d47a1' opacity='0.5'>ads.dovito.com</text>
+</svg>

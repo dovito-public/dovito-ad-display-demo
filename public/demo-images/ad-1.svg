@@ -1,0 +1,45 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='xMidYMid slice'>
+<defs>
+<linearGradient id='bg0' x1='0%' y1='0%' x2='100%' y2='100%'>
+<stop offset='0%' stop-color='#fff5e6'/>
+<stop offset='55%' stop-color='#ffd9a8'/>
+<stop offset='100%' stop-color='#f7a35f'/>
+</linearGradient>
+</defs>
+<rect width='1920' height='1080' fill='url(#bg0)'/>
+<g opacity='0.05'>
+<circle cx='1600' cy='200' r='300' fill='#6b2f00'/>
+<circle cx='200' cy='900' r='400' fill='#6b2f00'/>
+</g>
+
+<g transform='translate(1470 520)'>
+<ellipse cx='0' cy='120' rx='220' ry='40' fill='#6b2f00' opacity='0.18'/>
+<path d='M -180 0 Q -200 -120 -100 -140 Q 0 -170 100 -140 Q 200 -120 180 0 Q 150 90 0 100 Q -150 90 -180 0 Z' fill='#c84a00'/>
+<path d='M -160 -20 Q -170 -100 -90 -120 Q 0 -140 90 -120 Q 170 -100 160 -20 Q 130 60 0 70 Q -130 60 -160 -20 Z' fill='#e67e22'/>
+<path d='M -90 -80 Q -60 -100 -30 -90 M 0 -110 Q 30 -120 60 -100 M -60 -60 Q -30 -70 0 -60' stroke='#6b2f00' stroke-width='4' fill='none' stroke-linecap='round'/>
+<circle cx='-60' cy='-30' r='8' fill='#6b2f00'/>
+<circle cx='40' cy='-20' r='6' fill='#6b2f00'/>
+<circle cx='0' cy='-50' r='7' fill='#6b2f00'/>
+</g>
+<rect x='80' y='80' width='110' height='6' fill='#6b2f00'/>
+<text x='80' y='140' font-family='Inter, sans-serif' font-size='28' font-weight='500' fill='#6b2f00' letter-spacing='4'>DOVITO AD DISPLAY</text>
+<text x='80' y='460' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#6b2f00' letter-spacing='-2'>Rosa's Bakery</text>
+
+<text x='80' y='560' font-family='Inter, sans-serif' font-size='44' font-weight='400' fill='#6b2f00' opacity='0.85'>Fresh bread baked daily since 1987</text>
+<rect x='80' y='600' width='80' height='4' fill='#c84a00'/>
+<text x='80' y='660' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#6b2f00' letter-spacing='0.5'>Open 6am–6pm  ·  Main & 5th  ·  555-0110</text>
+<g transform='translate(80 960)'>
+<rect x='0' y='0' width='70' height='70' rx='4' fill='#6b2f00'/>
+<g fill='#c84a00'>
+<rect x='8' y='8' width='16' height='16'/>
+<rect x='46' y='8' width='16' height='16'/>
+<rect x='8' y='46' width='16' height='16'/>
+<rect x='30' y='30' width='8' height='8'/>
+<rect x='46' y='46' width='8' height='8'/>
+<rect x='46' y='30' width='8' height='4'/>
+<rect x='30' y='46' width='4' height='8'/>
+</g>
+</g>
+<text x='170' y='990' font-family='Inter, sans-serif' font-size='20' font-weight='500' fill='#6b2f00' opacity='0.7'>SCAN TO LEARN MORE</text>
+<text x='170' y='1018' font-family='Inter, sans-serif' font-size='16' fill='#6b2f00' opacity='0.5'>ads.dovito.com</text>
+</svg>

@@ -1,0 +1,47 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080' preserveAspectRatio='xMidYMid slice'>
+<defs>
+<linearGradient id='bg1' x1='0%' y1='0%' x2='100%' y2='100%'>
+<stop offset='0%' stop-color='#e8f5e9'/>
+<stop offset='60%' stop-color='#a5d6a7'/>
+<stop offset='100%' stop-color='#43a047'/>
+</linearGradient>
+</defs>
+<rect width='1920' height='1080' fill='url(#bg1)'/>
+<g opacity='0.05'>
+<circle cx='1600' cy='200' r='300' fill='#1b5e20'/>
+<circle cx='200' cy='900' r='400' fill='#1b5e20'/>
+</g>
+
+<g transform='translate(1500 540)'>
+<circle cx='0' cy='0' r='110' fill='#e53935'/>
+<path d='M 0 -110 Q -10 -140 20 -150 Q 40 -145 30 -120 L 20 -105' fill='#2e7d32'/>
+<ellipse cx='-30' cy='-30' rx='25' ry='35' fill='#ffccbc' opacity='0.5'/>
+<circle cx='-130' cy='80' r='70' fill='#ff9800'/>
+<path d='M -130 10 L -125 -5 L -120 10' fill='#2e7d32' stroke='#2e7d32' stroke-width='3'/>
+<ellipse cx='-155' cy='60' rx='10' ry='14' fill='#ffd180' opacity='0.6'/>
+<ellipse cx='120' cy='90' rx='75' ry='55' fill='#8bc34a'/>
+<path d='M 120 35 L 115 20 L 125 20 L 120 35' fill='#558b2f'/>
+<path d='M 80 90 Q 120 70 160 90' stroke='#558b2f' stroke-width='3' fill='none'/>
+</g>
+<rect x='80' y='80' width='110' height='6' fill='#1b5e20'/>
+<text x='80' y='140' font-family='Inter, sans-serif' font-size='28' font-weight='500' fill='#1b5e20' letter-spacing='4'>DOVITO AD DISPLAY</text>
+<text x='80' y='460' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#1b5e20' letter-spacing='-2'>Kim's</text>
+<text x='80' y='580' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#1b5e20' letter-spacing='-2'>Corner Market</text>
+<text x='80' y='680' font-family='Inter, sans-serif' font-size='44' font-weight='400' fill='#1b5e20' opacity='0.85'>Fresh produce · Local suppliers · Everyday low prices</text>
+<rect x='80' y='720' width='80' height='4' fill='#ff6f00'/>
+<text x='80' y='780' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#1b5e20' letter-spacing='0.5'>Open 7 days  ·  Corner of Oak & 3rd  ·  555-0111</text>
+<g transform='translate(80 960)'>
+<rect x='0' y='0' width='70' height='70' rx='4' fill='#1b5e20'/>
+<g fill='#ff6f00'>
+<rect x='8' y='8' width='16' height='16'/>
+<rect x='46' y='8' width='16' height='16'/>
+<rect x='8' y='46' width='16' height='16'/>
+<rect x='30' y='30' width='8' height='8'/>
+<rect x='46' y='46' width='8' height='8'/>
+<rect x='46' y='30' width='8' height='4'/>
+<rect x='30' y='46' width='4' height='8'/>
+</g>
+</g>
+<text x='170' y='990' font-family='Inter, sans-serif' font-size='20' font-weight='500' fill='#1b5e20' opacity='0.7'>SCAN TO LEARN MORE</text>
+<text x='170' y='1018' font-family='Inter, sans-serif' font-size='16' fill='#1b5e20' opacity='0.5'>ads.dovito.com</text>
+</svg>
