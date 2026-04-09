@@ -1,9 +1,19 @@
 import { QueryClient, type QueryFunction } from "@tanstack/react-query";
 import { mockGet, mockMutate } from "./mock-api";
 
+// Default queryFn: any useQuery call whose queryKey[0] starts with "/api/"
+// gets routed through the in-process mock API. Components that want to call
+// fetch() directly can still provide their own queryFn — the fetch
+// interceptor in mock-fetch.ts handles those paths too.
+const defaultQueryFn: QueryFunction = async ({ queryKey }) => {
+  const url = queryKey[0] as string;
+  return (await mockGet(url)) as unknown;
+};
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      queryFn: defaultQueryFn,
       staleTime: 60_000,
       refetchOnWindowFocus: false,
       retry: false,
