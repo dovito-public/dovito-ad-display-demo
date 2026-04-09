@@ -182,11 +182,7 @@ export default function Navigation({ customNavItems }: NavigationProps = {}) {
             </div>
           ) : (
             <div className="flex items-center space-x-3">
-              <a
-                href="https://billing.stripe.com/p/login/eVqeVe9Gjbvp2cpfGL5Ne01"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Link href="/login">
                 <Button
                   variant="ghost"
                   data-testid="button-login"
@@ -194,7 +190,7 @@ export default function Navigation({ customNavItems }: NavigationProps = {}) {
                 >
                   Login
                 </Button>
-              </a>
+              </Link>
               <Link href="/apply">
                 <Button
                   className="bg-[#3fb9ff] hover:bg-[#3fb9ff]/90 text-white px-6 py-2 rounded-full font-medium transition-all duration-300"
