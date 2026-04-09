@@ -167,6 +167,8 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 .callout strong { color: var(--blue); }
 .callout.amber { background: rgba(212, 151, 10, 0.05); border-color: rgba(212, 151, 10, 0.2); }
 .callout.amber strong { color: var(--amber); }
+.callout.sage { background: rgba(46, 125, 82, 0.05); border-color: rgba(46, 125, 82, 0.2); }
+.callout.sage strong { color: var(--sage); }
 
 .severity-grid { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
 .severity-box { border-radius: 12px; padding: 1.25rem 1.5rem; text-align: center; flex: 1; min-width: 100px; }
@@ -190,17 +192,6 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 .grade-track { flex: 1; height: 8px; background: var(--fog); border-radius: 4px; overflow: hidden; }
 .grade-fill { height: 100%; border-radius: 4px; }
 
-.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--dust); border-radius: 12px; overflow: hidden; margin: 2rem 0; }
-.comparison-col { padding: 2rem; }
-.comparison-col.before { background: rgba(232, 98, 10, 0.04); border-right: 1px solid var(--dust); }
-.comparison-col.after { background: rgba(40, 64, 240, 0.04); }
-.comparison-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; }
-.comparison-col.before h4 { color: var(--ember); }
-.comparison-col.after h4 { color: var(--blue); }
-.comparison-col ul { list-style: none; }
-.comparison-col ul li { padding: 0.5rem 0; font-size: 0.9375rem; color: var(--shale); border-bottom: 1px solid rgba(200, 205, 214, 0.2); }
-.comparison-col ul li:last-child { border-bottom: none; }
-
 .link-btn { display: inline-block; background: var(--blue); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; margin-top: 1rem; }
 .link-btn:hover { background: #1a2fc8; }
 .link-btn.ghost { background: transparent; color: var(--blue); border: 1px solid var(--blue); }
@@ -208,8 +199,6 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 @media (max-width: 768px) {
   .hero-stats { gap: 2rem; }
   .risk-grid { grid-template-columns: 1fr; }
-  .comparison { grid-template-columns: 1fr; }
-  .comparison-col.before { border-right: none; border-bottom: 1px solid var(--dust); }
   section { padding: 4rem 1.5rem; }
   .tab-bar { padding: 0 16px; }
   .collapsible summary { padding: 1.5rem 1.5rem 0.75rem; }
@@ -226,8 +215,8 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 <div class="case-study-notice">
   <strong>Example audit</strong> &mdash; performed on the public demo repository
   <a href="https://github.com/dovito-public/dovito-ad-display-demo" target="_blank" rel="noopener">dovito-public/dovito-ad-display-demo</a>
-  at commit <code>f6d21ca</code>. Reproduces the same methodology we apply to paid client engagements. All findings verifiable in the
-  <a href="https://github.com/dovito-public/dovito-ad-display-demo/tree/f6d21ca0b7d9cd98eaeedf7804c2a9b1adda9cec" target="_blank" rel="noopener">linked repo</a>
+  at commit <code>d4a9016</code>. Reproduces the same methodology we apply to paid client engagements. All findings verifiable in the
+  <a href="https://github.com/dovito-public/dovito-ad-display-demo/tree/d4a9016a3aafcf8ebbbddcc7221fa4c6932b00ee" target="_blank" rel="noopener">linked repo</a>
   &middot; <a href="https://dovito-public.github.io/dovito-ad-display-demo/" target="_blank" rel="noopener">live demo</a>.
 </div>
 
@@ -235,7 +224,7 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 <div class="top-nav">
   <h1>Codebase Audit Report</h1>
   <div class="meta">
-    <span class="version">April 9, 2026</span>
+    <span class="version">April 9, 2026 &middot; Refresh</span>
     <span class="status-pill">PUBLIC CASE STUDY</span>
   </div>
 </div>
@@ -243,13 +232,13 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 <!-- HERO -->
 <div class="hero">
   <div class="hero-content">
-    <div class="badge">Public Demo Audit</div>
+    <div class="badge">Public Demo Audit &middot; Refreshed</div>
     <h1>Dovito Ad Display <span>Demo Audit</span></h1>
     <p>Frontend-only static demo &ndash; architecture, code quality, security, performance, and SaaS-readiness assessment</p>
-    <p style="font-size: 1rem; color: var(--concrete); max-width: 700px; margin: -1.5rem auto 3rem;">A worked example of our standard audit methodology, applied to a public, backend-amputated demo of a digital signage platform. Every finding in this report can be reproduced by cloning the repo at the audited commit.</p>
+    <p style="font-size: 1rem; color: var(--concrete); max-width: 700px; margin: -1.5rem auto 3rem;">A worked example of our standard audit methodology, applied to a public, backend-amputated demo of a digital signage platform. Re-audited after a round of targeted fixes to the mock layer, demo UX, and asset pipeline. Every finding in this report can be reproduced by cloning the repo at the audited commit.</p>
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="number">13,700</span>
+        <span class="number">13,595</span>
         <span class="label">Lines of Code</span>
       </div>
       <div class="hero-stat">
@@ -257,11 +246,11 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
         <span class="label">TS/TSX Files</span>
       </div>
       <div class="hero-stat">
-        <span class="number">19</span>
+        <span class="number">17</span>
         <span class="label">Security Findings</span>
       </div>
       <div class="hero-stat">
-        <span class="number">C</span>
+        <span class="number">C+</span>
         <span class="label">Overall Grade</span>
       </div>
     </div>
@@ -295,17 +284,21 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <span class="toggle-icon">&#9654;</span>
   </summary>
   <div class="section-body">
-    <p class="section-desc">Context, purpose, and headline findings for the public demo audit.</p>
+    <p class="section-desc">Context, purpose, and headline findings for the refreshed public demo audit.</p>
 
-    <p style="color: var(--shale); margin-bottom: 1.5rem;">The subject of this audit is <code>dovito-ad-display-demo</code> &mdash; a public, frontend-only fork of the Dovito Ad Display production codebase. Every server-side component (Postgres, NextAuth, Stripe, Supabase, Mailgun) has been surgically removed and replaced with an in-browser mock layer that intercepts <code>window.fetch</code> and persists state to <code>localStorage</code>. The demo exists to let prospects click through every screen of the product without requiring a real deployment. <strong>It is intentionally not a production system</strong>, and this audit evaluates it on those terms.</p>
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The subject of this audit is <code>dovito-ad-display-demo</code> &mdash; a public, frontend-only fork of the Dovito Ad Display production codebase. Every server-side component (Postgres, NextAuth, Stripe, Supabase, Mailgun) has been surgically removed and replaced with an in-browser mock layer that intercepts <code>window.fetch</code> and persists state to <code>localStorage</code>. <strong>It is intentionally not a production system</strong>, and this audit evaluates it on those terms.</p>
 
-    <p style="color: var(--shale); margin-bottom: 1.5rem;">The codebase earns an overall grade of <strong>C</strong>. The frontend architecture is clean and idiomatic &mdash; modern Next.js 16 App Router, React 19, Tailwind 4, shadcn/ui, and React Query, all held together by a small (~1,100 LOC) mock layer that is genuinely well factored. TypeScript strict mode is enabled and there are zero <code>any</code> usages in the application source. Where the grade sags is in areas that simply cannot be fulfilled by a static demo: there are no tests, no error handling on mock API failure paths (because mock calls do not fail), no backend to secure, no monitoring, and no multi-tenant substrate. An honest assessment must score those categories near zero.</p>
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">This is a <strong>refresh</strong> of an audit originally performed earlier on the same day at commit <code>f6d21ca</code>. Between then and commit <code>d4a9016</code>, ten targeted commits addressed a cluster of correctness, UX, and asset-pipeline issues surfaced by the first pass &mdash; most notably a React error #185 infinite render loop, a demo banner that was covering the fixed top nav, an internal navigation link that pointed at a hardcoded Stripe billing URL, a login page that was overbuilt for a demo, a track-status page that relied on a free-form email input, eight placeholder ad JPEGs (now hand-crafted SVGs), a missing <code>basePath</code> on plain <code>&lt;img&gt;</code> tags, and silent failures in <code>useQuery</code> calls that were missing an explicit <code>queryFn</code>. The overall grade moves from <strong>C</strong> to <strong>C+</strong> as a result of these fixes, and the security-finding count drops from 19 to 17.</p>
 
-    <p style="color: var(--shale); margin-bottom: 1.5rem;">The three most notable strengths are: (1) a <strong>clean mock-layer abstraction</strong> &mdash; <code>mock-fetch.ts</code> patches <code>window.fetch</code> once, routes <code>/api/*</code> calls to a pure function in <code>mock-api.ts</code>, and all state mutations flow through a tiny <code>mock-store.ts</code> backed by <code>localStorage</code>; (2) <strong>strict TypeScript with zero escape hatches</strong> in application code; and (3) <strong>full surface coverage</strong> &mdash; 19 page routes and roughly 50 mocked endpoints faithfully reproduce the real product's user journeys, including the admin dashboard, the advertiser application flow, and the ad display kiosk.</p>
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The codebase's three most notable strengths at <code>d4a9016</code>: (1) a <strong>clean, well-factored mock-layer triad</strong> &mdash; <code>mock-fetch.ts</code> patches <code>window.fetch</code> exactly once, <code>mock-api.ts</code> routes <code>/api/*</code> through a single pure function with ~50 routes, and all mutations flow through a tiny CRUD helper in <code>mock-store.ts</code>; (2) a <strong>resilient React Query configuration</strong> &mdash; a default <code>queryFn</code> routes any <code>queryKey</code>-based call through <code>mockGet()</code>, which means components can use <code>useQuery({ queryKey: ["/api/..."] })</code> without boilerplate and without the silent-failure bug that existed at <code>f6d21ca</code>; and (3) a <strong>defensive cached snapshot</strong> in <code>mock-auth.ts</code> that ends the React #185 loop by returning a stable <code>User</code> reference until a <code>notify()</code> call flips the dirty bit.</p>
 
-    <p style="color: var(--shale); margin-bottom: 1.5rem;">The three most significant concerns &mdash; each of which would be critical on a real deployment and is acknowledged as intentional on the demo &mdash; are: (1) <strong>no auth enforcement whatsoever</strong>; anyone navigating to <code>/admin</code> is granted admin access and can observe all mocked data; (2) <strong>mock credentials are readable client-side by design</strong>; and (3) <strong>source maps and <code>next.config.ts</code>-disabled image optimization</strong> are shipped in production, which are real findings against the GitHub Pages deployment. On the SaaS-readiness dimension, the demo scores ~10% &mdash; not a failure, but a structural consequence of having no backend at all.</p>
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The three most significant remaining concerns &mdash; each intentional on the demo, critical in production &mdash; are unchanged from the first pass: (1) <strong>no auth enforcement</strong>; any visitor reaching <code>/admin</code> sees the admin UI (though the new login page provides a single explicit "Sign in as admin" button that documents the demo contract honestly); (2) <strong>mock credentials and seeded data are fully readable client-side</strong>; and (3) <strong>source maps are still being shipped</strong> in the GitHub Pages build &mdash; one <code>.js.map</code> file is present under <code>out/_next/static/chunks/</code>, and <code>next.config.ts</code> still lacks a <code>productionBrowserSourceMaps: false</code> toggle. On the SaaS-readiness dimension, the demo still scores ~10% &mdash; a structural consequence of having no backend.</p>
 
-    <p style="color: var(--shale); margin-bottom: 1.5rem;">The replacement value of the frontend work, assessed conservatively, lands between <strong>$60K and $180K</strong> depending on team structure. Productising the demo into a real multi-tenant SaaS would require a further <strong>$150K&ndash;$300K</strong> of backend, auth, billing, and platform work on top.</p>
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The replacement value of the frontend work lands between <strong>$60K and $180K</strong> depending on team structure. Productising the demo into a real multi-tenant SaaS would require a further <strong>$150K&ndash;$300K</strong> of backend, auth, billing, and platform work.</p>
+
+    <div class="callout sage">
+      <strong>What changed since the first pass.</strong> The following findings from the earlier audit have been resolved at <code>d4a9016</code>: React #185 infinite render loop in <code>useAuth</code>; demo banner obscuring the top nav; a hardcoded Stripe URL in the navigation login button; placeholder ad JPEGs; <code>basePath</code> missing on plain <code>&lt;img&gt;</code> tags; <code>useQuery</code> calls silently failing when no <code>queryFn</code> was supplied; default favicon; and two ad SVGs with unescaped ampersands that produced malformed XML. Two tabnabbing findings from the first pass are also gone &mdash; one link was removed outright, and the other was internal after the login refactor.
+    </div>
 
     <div class="callout">
       <strong>Why publish this?</strong> Our paid audits produce a client-facing report that the client rarely shares. This case study is identical in structure, scope, and methodology &mdash; the only difference is that the subject is a repository anyone can clone. When we tell a prospect "we'll deliver a report like <em>this</em>," this is the document we point to.
@@ -328,11 +321,11 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <p class="section-desc">Technology stack, architecture, and codebase metrics at the audited commit.</p>
 
     <div class="metric-grid">
-      <div class="metric-box"><span class="value">13,700</span><span class="metric-label">Lines of Code</span></div>
+      <div class="metric-box"><span class="value">13,595</span><span class="metric-label">Lines of Code</span></div>
       <div class="metric-box"><span class="value">75</span><span class="metric-label">TS/TSX Files</span></div>
       <div class="metric-box"><span class="value">19</span><span class="metric-label">Page Routes</span></div>
       <div class="metric-box"><span class="value">~50</span><span class="metric-label">Mock API Endpoints</span></div>
-      <div class="metric-box"><span class="value">33</span><span class="metric-label">Dependencies</span></div>
+      <div class="metric-box"><span class="value">26</span><span class="metric-label">Prod Dependencies</span></div>
       <div class="metric-box"><span class="value" style="color: var(--ember);">0</span><span class="metric-label">Tests</span></div>
     </div>
 
@@ -347,7 +340,7 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
         <tr><td>Data fetching</td><td>TanStack React Query</td><td><code>5.90</code></td></tr>
         <tr><td>Forms / validation</td><td>react-hook-form + Zod</td><td><code>7.71 / 4.3</code></td></tr>
         <tr><td>Animation</td><td>framer-motion</td><td><code>12.34</code></td></tr>
-        <tr><td>Mock persistence</td><td>browser <code>localStorage</code></td><td>&mdash;</td></tr>
+        <tr><td>Mock persistence</td><td>browser <code>localStorage</code> (key <code>dovito-demo-v2</code>)</td><td>&mdash;</td></tr>
         <tr><td>Deployment</td><td>GitHub Pages (static)</td><td>&mdash;</td></tr>
       </tbody>
     </table>
@@ -362,26 +355,26 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
             <span class="layer-item blue-bg">React 19</span>
             <span class="layer-item blue-bg">Tailwind 4</span>
             <span class="layer-item blue-bg">shadcn/ui</span>
-            <span class="layer-item blue-bg">React Query</span>
+            <span class="layer-item blue-bg">React Query (default queryFn)</span>
             <span class="layer-item blue-bg">react-hook-form + Zod</span>
           </div>
         </div>
         <div class="flow-arrow">&#8595;</div>
         <div class="arch-layer agents">
-          <div class="layer-title dark">Mock Service Layer</div>
+          <div class="layer-title dark">Mock Service Layer (~1,100 LOC)</div>
           <div class="layer-items">
             <span class="layer-item dark-bg">mock-fetch.ts (window.fetch patch)</span>
-            <span class="layer-item dark-bg">mock-api.ts (router)</span>
-            <span class="layer-item dark-bg">mock-auth.ts (role inference)</span>
-            <span class="layer-item dark-bg">mock-store.ts (CRUD helpers)</span>
+            <span class="layer-item dark-bg">mock-api.ts (router, ~50 endpoints)</span>
+            <span class="layer-item dark-bg">mock-auth.ts (cached snapshot)</span>
+            <span class="layer-item dark-bg">mock-store.ts (v2 schema, CRUD)</span>
           </div>
         </div>
         <div class="flow-arrow">&#8595;</div>
         <div class="arch-layer infra">
           <div class="layer-title grid">Persistence Layer</div>
           <div class="layer-items">
-            <span class="layer-item grid-bg">localStorage (key: dovito-demo-v1)</span>
-            <span class="layer-item grid-bg">mock-data.ts (seed)</span>
+            <span class="layer-item grid-bg">localStorage key: dovito-demo-v2</span>
+            <span class="layer-item grid-bg">mock-data.ts (seed + asset() helper)</span>
           </div>
         </div>
       </div>
@@ -394,15 +387,15 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
       <tbody>
         <tr><td>Next.js API routes (<code>src/app/api/*</code>)</td><td>Pure-function router in <code>mock-api.ts</code></td></tr>
         <tr><td>PostgreSQL + Drizzle ORM</td><td><code>localStorage</code>-backed collections</td></tr>
-        <tr><td>NextAuth v5 (Google OAuth, credentials)</td><td>Email-prefix role inference in <code>mock-auth.ts</code></td></tr>
+        <tr><td>NextAuth v5 (Google OAuth, credentials)</td><td>Single admin button + email-prefix role inference</td></tr>
         <tr><td>Stripe (Checkout, Elements, webhooks)</td><td>Fake card inputs in <code>collect-payment/page.tsx</code></td></tr>
-        <tr><td>Supabase Storage (image uploads)</td><td>Pre-seeded <code>/demo-images/</code> assets</td></tr>
+        <tr><td>Supabase Storage (image uploads)</td><td>Hand-crafted SVG ad assets in <code>/demo-images/</code></td></tr>
         <tr><td>Nodemailer / Mailgun</td><td>No-op success responses</td></tr>
       </tbody>
     </table>
 
     <div class="callout amber" style="margin-top: 2rem;">
-      <strong>Demo-specific deviations from source.</strong> Two files were materially rewritten: <code>src/app/(public)/collect-payment/page.tsx</code> now renders a fake card form for the checkout walkthrough, and <code>src/app/(public)/apply/page.tsx</code> had its Stripe calls removed. All other changes are limited to the mock layer and deletions. The upstream <code>Dovito-Ad-Display-V2.0.0</code> repository was not modified.
+      <strong>Demo-specific deviations from source.</strong> Three files are materially different from production: <code>src/app/(public)/collect-payment/page.tsx</code> renders a fake card form; <code>src/app/(public)/apply/page.tsx</code> has Stripe calls removed; and <code>src/app/login/page.tsx</code> is stripped to a single "Sign in as Admin" button with a "Back to home" link. All other changes are confined to the mock layer, assets, the demo banner, and the default query client.
     </div>
   </div>
 </details>
@@ -419,69 +412,87 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <span class="toggle-icon">&#9654;</span>
   </summary>
   <div class="section-body">
-    <p class="section-desc">Letter grades across nine quality dimensions. Several dimensions are structurally capped by the static-demo constraint; we flag them rather than inflate them.</p>
+    <p class="section-desc">Letter grades across nine dimensions. Several are structurally capped by the static-demo constraint; we flag them rather than inflate them.</p>
 
     <div style="margin-bottom: 3rem;">
-      <div class="grade-row"><span class="grade-label">Architecture</span><span class="grade-letter" style="color: var(--sage);">A-</span><div class="grade-track"><div class="grade-fill" style="width: 88%; background: var(--sage);"></div></div></div>
-      <div class="grade-row"><span class="grade-label">Code Consistency</span><span class="grade-letter" style="color: var(--sage);">B+</span><div class="grade-track"><div class="grade-fill" style="width: 82%; background: var(--sage);"></div></div></div>
-      <div class="grade-row"><span class="grade-label">Type Safety</span><span class="grade-letter" style="color: var(--sage);">A</span><div class="grade-track"><div class="grade-fill" style="width: 92%; background: var(--sage);"></div></div></div>
-      <div class="grade-row"><span class="grade-label">Error Handling</span><span class="grade-letter" style="color: var(--ember);">D</span><div class="grade-track"><div class="grade-fill" style="width: 30%; background: var(--ember);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Architecture</span><span class="grade-letter" style="color: var(--sage);">A-</span><div class="grade-track"><div class="grade-fill" style="width: 90%; background: var(--sage);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Code Consistency</span><span class="grade-letter" style="color: var(--sage);">B+</span><div class="grade-track"><div class="grade-fill" style="width: 84%; background: var(--sage);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Type Safety</span><span class="grade-letter" style="color: var(--amber);">B-</span><div class="grade-track"><div class="grade-fill" style="width: 75%; background: var(--amber);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Error Handling</span><span class="grade-letter" style="color: var(--ember);">D</span><div class="grade-track"><div class="grade-fill" style="width: 32%; background: var(--ember);"></div></div></div>
       <div class="grade-row"><span class="grade-label">Test Coverage</span><span class="grade-letter" style="color: var(--ember);">F</span><div class="grade-track"><div class="grade-fill" style="width: 2%; background: var(--ember);"></div></div></div>
-      <div class="grade-row"><span class="grade-label">Security</span><span class="grade-letter" style="color: var(--amber);">C-</span><div class="grade-track"><div class="grade-fill" style="width: 50%; background: var(--amber);"></div></div></div>
-      <div class="grade-row"><span class="grade-label">Performance</span><span class="grade-letter" style="color: var(--amber);">C+</span><div class="grade-track"><div class="grade-fill" style="width: 62%; background: var(--amber);"></div></div></div>
-      <div class="grade-row"><span class="grade-label">Documentation</span><span class="grade-letter" style="color: var(--sage);">B</span><div class="grade-track"><div class="grade-fill" style="width: 72%; background: var(--sage);"></div></div></div>
-      <div class="grade-row"><span class="grade-label">Developer Experience</span><span class="grade-letter" style="color: var(--sage);">B+</span><div class="grade-track"><div class="grade-fill" style="width: 80%; background: var(--sage);"></div></div></div>
-      <div class="grade-row overall"><span class="grade-label"><strong>Overall</strong></span><span class="grade-letter" style="color: var(--blue); font-size: 1rem;"><strong>C</strong></span><div class="grade-track"><div class="grade-fill" style="width: 58%; background: var(--blue);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Security</span><span class="grade-letter" style="color: var(--amber);">C</span><div class="grade-track"><div class="grade-fill" style="width: 55%; background: var(--amber);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Performance</span><span class="grade-letter" style="color: var(--amber);">C+</span><div class="grade-track"><div class="grade-fill" style="width: 65%; background: var(--amber);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Documentation</span><span class="grade-letter" style="color: var(--sage);">B</span><div class="grade-track"><div class="grade-fill" style="width: 74%; background: var(--sage);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Developer Experience</span><span class="grade-letter" style="color: var(--sage);">B+</span><div class="grade-track"><div class="grade-fill" style="width: 82%; background: var(--sage);"></div></div></div>
+      <div class="grade-row overall"><span class="grade-label"><strong>Overall</strong></span><span class="grade-letter" style="color: var(--blue); font-size: 1rem;"><strong>C+</strong></span><div class="grade-track"><div class="grade-fill" style="width: 62%; background: var(--blue);"></div></div></div>
     </div>
 
     <h3>Key Findings</h3>
     <div class="card-grid" style="margin-top: 1rem;">
       <div class="card">
         <span class="pill sage">Strength</span>
-        <h4>Clean mock-layer abstraction</h4>
-        <p>The <code>mock-fetch.ts</code> / <code>mock-api.ts</code> / <code>mock-store.ts</code> triad totals ~1,100 LOC and implements a faithful, testable simulation of a REST backend. <code>window.fetch</code> is patched exactly once, <code>/api/*</code> is routed to a pure function, and every mutation flows through a single <code>insertOne/updateOne/deleteOne</code> set of helpers.</p>
+        <h4>Resilient default <code>queryFn</code></h4>
+        <p><code>src/lib/query-client.ts:8</code> installs a default <code>queryFn</code> that routes <code>queryKey[0]</code> through <code>mockGet()</code>. Before this fix (commit <code>d4a9016</code>), any <code>useQuery</code> call lacking an explicit <code>queryFn</code> silently failed because the previous QueryClient had none. Now the whole app can rely on "<code>queryKey: [&quot;/api/..."]</code>" as a calling convention.</p>
       </div>
       <div class="card">
         <span class="pill sage">Strength</span>
-        <h4>Zero <code>any</code> in application source</h4>
-        <p>An exhaustive grep of <code>src/</code> finds no <code>any</code> type annotations in application code. Four explicit <code>any</code> usages exist inside the mock layer itself where they are structurally justified (generic collection store, fetch interceptor body), each with an <code>eslint-disable</code> comment.</p>
+        <h4>Cached auth snapshot fixes React #185</h4>
+        <p><code>src/lib/mock-auth.ts:13</code> introduces <code>cachedSnapshot</code> + <code>snapshotDirty</code>. <code>getSnapshot()</code> now returns the same <code>User</code> reference between notifications, so <code>useSyncExternalStore</code> stops looping. <code>src/hooks/use-auth.ts:16</code> also wraps the adapted user in <code>useMemo</code> so consumers with <code>[user]</code> in effect deps don't re-run every render.</p>
       </div>
       <div class="card">
         <span class="pill sage">Strength</span>
-        <h4>Strict TypeScript enabled</h4>
-        <p><code>tsconfig.json</code> has <code>"strict": true</code> with no escape flags. Combined with the absence of <code>any</code>, the type system is doing real work.</p>
+        <h4>Clean mock-layer triad (~1,100 LOC)</h4>
+        <p><code>mock-fetch.ts</code> patches <code>window.fetch</code> once; <code>mock-api.ts</code> is a single pure function with ~50 routes; <code>mock-store.ts</code> exposes a handful of generic <code>insertOne/updateOne/deleteOne/findOne</code> helpers. The triad is small enough to audit end to end in an afternoon.</p>
       </div>
       <div class="card">
-        <span class="pill ember">Critical</span>
-        <h4>Zero test coverage</h4>
-        <p>No test files, no test runner, no CI gate. This inherits from the production codebase &mdash; which has the same gap &mdash; but on a demo repo the absence is felt less acutely because there is nothing to break beyond the UI.</p>
+        <span class="pill sage">Strength</span>
+        <h4>Strict TypeScript with justified escape hatches</h4>
+        <p><code>tsconfig.json</code> has <code>"strict": true</code>. The mock layer itself contains one <code>eslint-disable</code> for <code>no-explicit-any</code> on the root store type (<code>mock-store.ts:19</code>) &mdash; structurally justified because the store is a heterogeneous collection keyed by name.</p>
+      </div>
+      <div class="card">
+        <span class="pill amber">Medium</span>
+        <h4>~25 <code>any</code> usages in application source</h4>
+        <p>The earlier audit claimed zero <code>any</code> outside the mock layer. That was an overreach: a refreshed grep finds <code>any</code> assertions in <code>marketing-calculator.tsx:27</code>, <code>embedded-display.tsx:30</code>, <code>app/display/page.tsx:38</code>, <code>brand-kit/page.tsx:69</code>, <code>apply/page.tsx:927</code>, and three success/collect-payment pages. Most are <code>(x as any[]).find((s: any) =&gt; ...)</code> patterns where a typed <code>DisplaySetting[]</code> would be trivial. Corrected downgrades Type Safety from A to B-.</p>
       </div>
       <div class="card">
         <span class="pill ember">High</span>
         <h4>No failure paths in mock API</h4>
-        <p>The mock router in <code>mock-api.ts</code> never returns an error &mdash; its fallback is a cheerful <code>{ success: true, demo: true }</code>. Code downstream of a React Query call therefore never exercises its error branch. This is a verifiable runtime bug for any consumer that reads error states, and it would become a real production bug if the mock layer were replaced with a real backend.</p>
+        <p><code>mock-api.ts:469</code> falls back to <code>{ success: true, demo: true, path, method }</code> for unrecognised routes. Downstream code never exercises its error branch, and any typo in a <code>queryKey</code> will succeed silently with a confusing payload. Would become a production bug the moment the mock is swapped for a real backend.</p>
+      </div>
+      <div class="card">
+        <span class="pill ember">High</span>
+        <h4>Zero test coverage</h4>
+        <p>No test files, no runner, no CI gate. Carry-over from production. Even a Vitest smoke test against <code>mock-api.ts</code>'s routing table would prevent a whole class of regressions on a demo whose sole purpose is a convincing walkthrough.</p>
       </div>
       <div class="card">
         <span class="pill amber">Medium</span>
         <h4>localStorage reads on every store access</h4>
-        <p><code>mock-store.ts</code> calls <code>load()</code> on every public helper, performing a synchronous <code>JSON.parse</code> of the entire store per operation. For a demo with a few hundred records this is invisible, but it is a pattern worth flagging because it will not scale if the store is reused elsewhere.</p>
+        <p><code>mock-store.ts:41</code>'s <code>load()</code> is called inside every public helper. For ~200 seed records this is microseconds, but it blocks the main thread and scales poorly. An in-memory mirror with write-through persistence would cost <30 LOC.</p>
       </div>
       <div class="card">
         <span class="pill amber">Medium</span>
-        <h4>No error boundaries</h4>
-        <p>The app has no React error boundary components. An uncaught render error anywhere below the root layout will blank the entire page.</p>
+        <h4>No React error boundaries</h4>
+        <p>No <code>ErrorBoundary</code> component in the tree. An uncaught render error below the root layout blanks the entire page. Single root-level boundary would cost <20 LOC and catch the kind of silent XML-parse failures that shipped ad-1/ad-2 with unescaped ampersands earlier today.</p>
       </div>
       <div class="card">
         <span class="pill blue">Info</span>
-        <h4>Consistent component conventions</h4>
-        <p>39 components under <code>src/components/</code>, all using the same React Query + shadcn/ui + Tailwind idioms. Naming is consistent (kebab-case files, PascalCase exports). ESLint + Next ESLint config present.</p>
+        <h4>localStorage schema versioning</h4>
+        <p><code>mock-store.ts:17</code> bumps the key from <code>dovito-demo-v1</code> to <code>dovito-demo-v2</code> whenever the seed shape changes &mdash; here it was bumped after <code>basePath</code>-prefixed image URLs replaced raw strings. The mechanism is good; there is no automatic detection ("did the seed change?") so bumping remains a manual discipline.</p>
       </div>
       <div class="card">
         <span class="pill blue">Info</span>
-        <h4>README is genuinely useful</h4>
-        <p>The repo README accurately describes the demo's provenance, the mock layer, and what was stripped out. Inline comments are sparse but the code is readable enough that this is not a red flag.</p>
+        <h4>Eight custom SVG ad assets replace placeholder JPEGs</h4>
+        <p>All eight slide ads under <code>public/demo-images/</code> are now hand-crafted SVGs, one per business. All eight parse cleanly as XML (verified). Earlier today two of them (ad-1, ad-2) shipped with unescaped ampersands &mdash; the fix is in, but the silent failure mode is worth a note below in <em>Asset Validation</em>.</p>
+      </div>
+      <div class="card">
+        <span class="pill blue">Info</span>
+        <h4>Custom SVG favicon</h4>
+        <p><code>public/icon.svg</code> is a bespoke SVG favicon; the default <code>favicon.ico</code> has been removed. Non-functional but removes a "generic Next.js starter" tell from the client.</p>
       </div>
     </div>
+
+    <h3 style="margin-top: 3rem;">Asset Validation</h3>
+    <p style="color: var(--shale); margin-bottom: 1rem;">Earlier today two ad SVGs shipped to the live demo with unescaped <code>&amp;</code> characters in their <code>&lt;text&gt;</code> nodes, producing malformed XML that browsers refused to render. The fix was a straightforward escape, but the lesson is that static SVGs are entering the bundle with zero validation. A single <code>xmllint --noout public/demo-images/*.svg</code> gate in the build would have caught it. We flag it as <strong>Info</strong> because it is already fixed, but the systemic gap remains.</p>
   </div>
 </details>
 
@@ -497,13 +508,13 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <span class="toggle-icon">&#9654;</span>
   </summary>
   <div class="section-body">
-    <p class="section-desc">19 findings across 5 severity levels. Several findings are flagged as "intentional on demo, critical in production" &mdash; the point of listing them is to make explicit what a real deployment would need to address.</p>
+    <p class="section-desc">17 findings across 5 severity levels at commit <code>d4a9016</code>. Several are flagged as "intentional on demo, critical in production" &mdash; the point of listing them is to make explicit what a real deployment would need to address.</p>
 
     <div class="severity-grid">
       <div class="severity-box critical"><span class="sev-count">0</span><span class="sev-label">Critical</span></div>
       <div class="severity-box high-sev"><span class="sev-count">2</span><span class="sev-label">High</span></div>
-      <div class="severity-box medium-sev"><span class="sev-count">6</span><span class="sev-label">Medium</span></div>
-      <div class="severity-box low-sev"><span class="sev-count">5</span><span class="sev-label">Low</span></div>
+      <div class="severity-box medium-sev"><span class="sev-count">5</span><span class="sev-label">Medium</span></div>
+      <div class="severity-box low-sev"><span class="sev-count">4</span><span class="sev-label">Low</span></div>
       <div class="severity-box info-sev"><span class="sev-count">6</span><span class="sev-label">Info</span></div>
     </div>
 
@@ -512,12 +523,12 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
       <div class="risk-card high">
         <div class="risk-level">High &ndash; SEC-001</div>
         <h4>Source maps shipped to production</h4>
-        <p><code>next.config.ts</code> does not disable source map generation for the static export, and at least one <code>.js.map</code> file is present under <code>out/_next/static/chunks/</code> in the deployed bundle. On a static GitHub Pages deployment this means the original TypeScript sources are trivially recoverable. On the demo this leaks nothing sensitive; on any real engagement it would leak the entire client-side codebase to adversaries.</p>
+        <p><code>next.config.ts</code> does not set <code>productionBrowserSourceMaps: false</code>, and one <code>.js.map</code> file (<code>a6dad97d9634a72d.js.map</code>) is present under <code>out/_next/static/chunks/</code> in the deployed build. On a static GitHub Pages deployment this means at least part of the original TypeScript source is trivially recoverable. On the demo this leaks nothing sensitive; on any real engagement it would leak client-side code paths to adversaries. <em>Unchanged from earlier audit.</em></p>
       </div>
       <div class="risk-card high">
         <div class="risk-level">High &ndash; SEC-002</div>
         <h4>No HTTP security headers on GitHub Pages</h4>
-        <p>GitHub Pages does not set <code>Content-Security-Policy</code>, <code>X-Frame-Options</code>, <code>Strict-Transport-Security</code>, <code>Referrer-Policy</code>, or <code>Permissions-Policy</code>. A static-export Next.js app cannot inject headers at runtime. For the demo this is acceptable; for any real deployment the app must be fronted by a CDN or edge worker capable of header injection.</p>
+        <p>GitHub Pages does not set <code>Content-Security-Policy</code>, <code>X-Frame-Options</code>, <code>Strict-Transport-Security</code>, <code>Referrer-Policy</code>, or <code>Permissions-Policy</code>. A static-export Next.js app cannot inject headers at runtime. For the demo this is acceptable; for any real deployment the app must be fronted by a CDN or edge worker capable of header injection. <em>Unchanged.</em></p>
       </div>
     </div>
 
@@ -526,11 +537,10 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
       <thead><tr><th>ID</th><th>Finding</th><th>File</th><th>Category</th></tr></thead>
       <tbody>
         <tr><td><code>SEC-003</code></td><td>No client-side auth enforcement: <code>/admin</code> is reachable by any visitor with full admin UI access</td><td><code>src/app/admin/page.tsx</code></td><td>AuthZ (intentional)</td></tr>
-        <tr><td><code>SEC-004</code></td><td>Role is inferred from email string containing "admin" or "super" &mdash; no password, no verification</td><td><code>src/lib/mock-auth.ts:13</code></td><td>AuthN (intentional)</td></tr>
-        <tr><td><code>SEC-005</code></td><td><code>target="_blank"</code> without <code>rel="noopener noreferrer"</code> exposes the opener window</td><td><code>src/components/navigation.tsx:187</code></td><td>Tabnabbing</td></tr>
-        <tr><td><code>SEC-006</code></td><td>Same issue on the in-app audit page link</td><td><code>src/app/audit/page.tsx:59</code></td><td>Tabnabbing</td></tr>
-        <tr><td><code>SEC-007</code></td><td>1 <strong>high</strong> severity npm advisory and 3 moderate advisories in the dependency tree</td><td><code>package-lock.json</code></td><td>Dependencies</td></tr>
-        <tr><td><code>SEC-008</code></td><td><code>localStorage</code> state is unencrypted, unsigned, and fully attacker-controllable. On a real app this would enable client-side privilege escalation.</td><td><code>src/lib/mock-store.ts</code></td><td>Data integrity (intentional)</td></tr>
+        <tr><td><code>SEC-004</code></td><td>Role is inferred from email string containing "admin" or "super" &mdash; no password, no verification</td><td><code>src/lib/mock-auth.ts:21</code></td><td>AuthN (intentional)</td></tr>
+        <tr><td><code>SEC-005</code></td><td>Mock router fallback returns HTTP 200 + <code>{success: true}</code> for every unknown path, masking typos and future bugs</td><td><code>src/lib/mock-api.ts:469</code></td><td>Error handling</td></tr>
+        <tr><td><code>SEC-006</code></td><td>1 high + 3 moderate npm advisories in the full dependency tree (<code>@hono/node-server</code>, <code>brace-expansion</code>, transitive dev deps)</td><td><code>package-lock.json</code></td><td>Dependencies</td></tr>
+        <tr><td><code>SEC-007</code></td><td><code>localStorage</code> state is unencrypted, unsigned, and fully attacker-controllable. On a real app this would enable client-side privilege escalation; the schema-version bump to <code>v2</code> only protects against stale data, not tampering.</td><td><code>src/lib/mock-store.ts</code></td><td>Data integrity (intentional)</td></tr>
       </tbody>
     </table>
 
@@ -538,22 +548,21 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <table class="flow-table" style="margin-top: 1rem;">
       <thead><tr><th>ID</th><th>Severity</th><th>Finding</th></tr></thead>
       <tbody>
-        <tr><td><code>SEC-009</code></td><td>Low</td><td>Demo auth has no password field at all &mdash; anyone can "sign in" as any email, including fabricated admin/super emails.</td></tr>
-        <tr><td><code>SEC-010</code></td><td>Low</td><td>Mock fetch interceptor responds with HTTP 200 for every request, including unknown paths, which could mask UI bugs.</td></tr>
-        <tr><td><code>SEC-011</code></td><td>Low</td><td>Application form (<code>apply/page.tsx</code>) renders user-supplied text fields via React's default escaping &mdash; no <code>dangerouslySetInnerHTML</code>, no XSS risk observed.</td></tr>
-        <tr><td><code>SEC-012</code></td><td>Low</td><td>Coupon code <code>LAUNCH20</code> is hardcoded in <code>mock-api.ts:449</code>. Intentional for demo but would be a finding in production.</td></tr>
-        <tr><td><code>SEC-013</code></td><td>Low</td><td>Mock admin credentials and seeded users are visible in the client bundle. Intentional and documented in the README.</td></tr>
-        <tr><td><code>SEC-014</code></td><td>Info</td><td>No <code>process.env</code> secrets referenced in application source &mdash; the only usage is <code>NODE_ENV</code> in <code>src/app/audit/page.tsx</code> for basePath resolution. Clean.</td></tr>
-        <tr><td><code>SEC-015</code></td><td>Info</td><td>No <code>.env</code> file committed to the repository.</td></tr>
-        <tr><td><code>SEC-016</code></td><td>Info</td><td>No <code>dangerouslySetInnerHTML</code> anywhere in the codebase.</td></tr>
-        <tr><td><code>SEC-017</code></td><td>Info</td><td>No inline event handlers (<code>onclick=</code>) in rendered JSX &mdash; all handlers are typed React props.</td></tr>
-        <tr><td><code>SEC-018</code></td><td>Info</td><td>GitHub Pages serves over HTTPS with automatic certificate provisioning.</td></tr>
-        <tr><td><code>SEC-019</code></td><td>Info</td><td>No third-party analytics, tag managers, or trackers loaded in the client bundle.</td></tr>
+        <tr><td><code>SEC-008</code></td><td>Low</td><td>Demo auth has no password field at all &mdash; the login page is a single "Sign in as Admin" button that is honest about demo mode but provides no identity gate.</td></tr>
+        <tr><td><code>SEC-009</code></td><td>Low</td><td>One <code>target=&quot;_blank&quot;</code> with explicit <code>rel=&quot;noopener noreferrer&quot;</code> present on <code>src/app/audit/page.tsx:59</code> &mdash; clean. The first audit's two tabnabbing findings are resolved: the navigation login button is now internal, and the audit page link was already properly annotated.</td></tr>
+        <tr><td><code>SEC-010</code></td><td>Low</td><td>Coupon code <code>LAUNCH20</code> is hardcoded in <code>mock-api.ts:453</code>. Intentional for demo but would be a finding in production.</td></tr>
+        <tr><td><code>SEC-011</code></td><td>Low</td><td>Mock admin credentials and seeded users are visible in the client bundle. Intentional and documented.</td></tr>
+        <tr><td><code>SEC-012</code></td><td>Info</td><td>No <code>process.env</code> secrets referenced in application source beyond <code>NODE_ENV</code>, which is used only for basePath resolution in <code>mock-api.ts:12</code> and the audit page. Clean.</td></tr>
+        <tr><td><code>SEC-013</code></td><td>Info</td><td>No <code>.env</code> file committed to the repository.</td></tr>
+        <tr><td><code>SEC-014</code></td><td>Info</td><td>No <code>dangerouslySetInnerHTML</code> anywhere in the codebase.</td></tr>
+        <tr><td><code>SEC-015</code></td><td>Info</td><td>No inline event handlers (<code>onclick=</code>) in rendered JSX &mdash; all handlers are typed React props.</td></tr>
+        <tr><td><code>SEC-016</code></td><td>Info</td><td>GitHub Pages serves over HTTPS with automatic certificate provisioning.</td></tr>
+        <tr><td><code>SEC-017</code></td><td>Info</td><td>No third-party analytics, tag managers, or trackers loaded in the client bundle.</td></tr>
       </tbody>
     </table>
 
     <div class="callout" style="margin-top: 3rem;">
-      <strong>Honest disclosure:</strong> The production Dovito Ad Display codebase &mdash; from which this demo is forked &mdash; has a real auth layer, CSRF protection, magic-byte image validation, Stripe webhook signing, rate limiting, and server-side authorization. None of those are relevant to a frontend-only demo, so none appear in this audit. The findings above are strictly the ones that apply to the artifact as shipped on GitHub Pages.
+      <strong>Honest disclosure:</strong> The production Dovito Ad Display codebase &mdash; from which this demo is forked &mdash; has a real auth layer, CSRF protection, magic-byte image validation, Stripe webhook signing, rate limiting, and server-side authorization. None of those are relevant to a frontend-only demo, so none appear in this audit. The findings above are strictly the ones that apply to the artifact as shipped on GitHub Pages at <code>d4a9016</code>.
     </div>
   </div>
 </details>
@@ -570,23 +579,23 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <span class="toggle-icon">&#9654;</span>
   </summary>
   <div class="section-body">
-    <p class="section-desc">Directional assessment across five frontend performance categories. Lighthouse was not executed; numbers are based on static-file inspection of the deployed <code>out/</code> directory.</p>
+    <p class="section-desc">Directional assessment across five frontend categories. Lighthouse was not executed; numbers are based on static-file inspection of the deployed <code>out/</code> directory at <code>d4a9016</code>.</p>
 
     <div class="bar-chart" style="margin-bottom: 3rem;">
       <div class="bar-row">
         <span class="bar-label-wide">Bundle Size</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width: 55%;"></div></div>
-        <span class="bar-value">55%</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width: 58%;"></div></div>
+        <span class="bar-value">58%</span>
       </div>
       <div class="bar-row">
         <span class="bar-label-wide">Rendering</span>
-        <div class="bar-track"><div class="bar-fill sage" style="width: 72%;"></div></div>
-        <span class="bar-value">72%</span>
+        <div class="bar-track"><div class="bar-fill sage" style="width: 78%;"></div></div>
+        <span class="bar-value">78%</span>
       </div>
       <div class="bar-row">
         <span class="bar-label-wide">Assets &amp; Images</span>
-        <div class="bar-track"><div class="bar-fill ember" style="width: 35%;"></div></div>
-        <span class="bar-value">35%</span>
+        <div class="bar-track"><div class="bar-fill sage" style="width: 70%;"></div></div>
+        <span class="bar-value">70%</span>
       </div>
       <div class="bar-row">
         <span class="bar-label-wide">Network</span>
@@ -595,14 +604,14 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
       </div>
       <div class="bar-row">
         <span class="bar-label-wide">Runtime</span>
-        <div class="bar-track"><div class="bar-fill amber" style="width: 60%;"></div></div>
-        <span class="bar-value">60%</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width: 62%;"></div></div>
+        <span class="bar-value">62%</span>
       </div>
     </div>
 
     <div class="metric-grid">
-      <div class="metric-box"><span class="value">2.2 MB</span><span class="metric-label">JS Chunks (uncompressed)</span></div>
-      <div class="metric-box"><span class="value">9.8 MB</span><span class="metric-label">Total <code>out/</code> directory</span></div>
+      <div class="metric-box"><span class="value">2.0 MB</span><span class="metric-label">JS Chunks (uncompressed)</span></div>
+      <div class="metric-box"><span class="value">8.3 MB</span><span class="metric-label">Total <code>out/</code> directory</span></div>
       <div class="metric-box"><span class="value">1</span><span class="metric-label">Source map shipped</span></div>
       <div class="metric-box"><span class="value">Static</span><span class="metric-label">Hosting model</span></div>
     </div>
@@ -610,39 +619,39 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <h3 style="margin-top: 3rem;">Performance Findings</h3>
     <div class="card-grid" style="margin-top: 1rem;">
       <div class="card">
+        <span class="pill sage">Improved</span>
+        <h4>Hand-crafted SVG ads shrink the image payload</h4>
+        <p>The eight ad images are now vector SVGs averaging a few kilobytes each rather than ~100KB raster JPEGs. Total <code>out/</code> drops from 9.8MB at the first audit to 8.3MB now, driven primarily by the <code>demo-images/</code> swap. SVGs also render crisply at any display resolution, which matters for a digital-signage demo.</p>
+      </div>
+      <div class="card">
         <span class="pill ember">Frontend</span>
         <h4>Image optimization disabled</h4>
-        <p><code>next.config.ts</code> sets <code>images: { unoptimized: true }</code> because static export cannot use the Next image optimizer. Every <code>/demo-images/*.jpg</code> is served at its original size and format. This is a structural constraint of static export on GitHub Pages, not a bug.</p>
+        <p><code>next.config.ts:8</code> sets <code>images: { unoptimized: true }</code> because static export cannot use the Next image optimizer. Structural constraint of GitHub Pages, not a bug &mdash; but worth flagging because the asset-pipeline finding above would be fully solved by reintroducing the optimizer on a real deployment.</p>
       </div>
       <div class="card">
         <span class="pill amber">Frontend</span>
-        <h4>Bundle: 2.2MB of JS chunks</h4>
-        <p>The <code>out/_next/static/chunks/</code> directory is 2.2MB uncompressed across ~40 chunks. After gzip this is probably in the 600&ndash;800KB range &mdash; high but not extreme for a React 19 + framer-motion + radix-ui + React Query stack. No dynamic imports beyond Next.js route splitting.</p>
+        <h4>2.0MB JS chunks across ~40 files</h4>
+        <p><code>out/_next/static/chunks/</code> is 2.0MB uncompressed &mdash; down from 2.2MB at the first audit. After gzip this is probably in the 550&ndash;750KB range, which is high but not extreme for a React 19 + framer-motion + radix-ui + React Query stack. No dynamic imports beyond Next.js route splitting.</p>
       </div>
       <div class="card">
         <span class="pill amber">Runtime</span>
-        <h4>Synchronous localStorage on every mock call</h4>
-        <p>Each call through <code>mock-store.ts</code> does a full <code>JSON.parse</code> of the root store. For ~200 seed records this is microseconds, but it blocks the main thread and will scale poorly if the store grows.</p>
+        <h4>Synchronous <code>localStorage</code> on every mock call</h4>
+        <p><code>mock-store.ts:72</code>'s <code>getCollection</code> calls <code>load()</code>, which does a full <code>JSON.parse</code> of the root store on every invocation. Even small admin pages trigger it 10+ times per render. For ~200 seed records this is microseconds, but it blocks the main thread and is trivially fixable.</p>
       </div>
       <div class="card">
         <span class="pill amber">Runtime</span>
         <h4>No memoization of expensive computations</h4>
-        <p>Spot-checks of the admin dashboard and analytics view show inline <code>.filter().sort()</code> chains in render bodies without <code>useMemo</code>. Not a bug &mdash; a finding worth flagging for growth.</p>
-      </div>
-      <div class="card">
-        <span class="pill sage">Network</span>
-        <h4>Static hosting means trivial CDN caching</h4>
-        <p>GitHub Pages serves every file with an ETag and modest cache headers. First paint after initial load is dominated by Next.js runtime and framer-motion, not network.</p>
+        <p>Spot-checks of <code>admin/page.tsx</code>, <code>marketing-calculator.tsx</code>, and the analytics view show inline <code>.filter().sort()</code> chains in render bodies without <code>useMemo</code>. Not a bug, a finding worth flagging for growth.</p>
       </div>
       <div class="card">
         <span class="pill sage">Rendering</span>
-        <h4>React Query handles stale-while-revalidate well</h4>
-        <p>Default React Query configuration plus a 150ms artificial delay in the mock layer produces a convincing "real API" feel without blocking interactions.</p>
+        <h4>React Query stale-while-revalidate + 150ms mock delay</h4>
+        <p>The new default <code>queryFn</code> in <code>query-client.ts:8</code> combined with <code>DELAY_MS = 150</code> in <code>mock-api.ts:27</code> produces a convincing "real API" feel: skeletons appear briefly and data hydrates without blocking interactions.</p>
       </div>
       <div class="card">
-        <span class="pill elevation">Info</span>
-        <h4>Font loading via Google Fonts <code>&lt;link&gt;</code></h4>
-        <p>Fonts are loaded via preconnect + stylesheet, not <code>next/font</code>, because the deviation report audit pages predate the rest of the refactor. Low impact on a demo.</p>
+        <span class="pill sage">Network</span>
+        <h4>Trivial CDN caching</h4>
+        <p>GitHub Pages serves every file with an ETag and modest cache headers. First paint after initial load is dominated by Next.js runtime and framer-motion, not network.</p>
       </div>
       <div class="card">
         <span class="pill elevation">Info</span>
@@ -715,7 +724,7 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <span class="toggle-icon">&#9654;</span>
   </summary>
   <div class="section-body">
-    <p class="section-desc">Replacement value and team cost estimates for the 13.7K LOC frontend-only codebase. Methodology: industry-average productivity (roughly 10&ndash;15 LOC per engineer-hour including design, review, refactor), weighted by complexity.</p>
+    <p class="section-desc">Replacement value and team cost estimates for the 13.6K LOC frontend-only codebase. Methodology: industry-average productivity (roughly 10&ndash;15 LOC per engineer-hour including design, review, refactor), weighted by complexity.</p>
 
     <div class="metric-grid">
       <div class="metric-box"><span class="value">$100K</span><span class="metric-label">Mid-case Cost</span></div>
@@ -755,7 +764,7 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     </table>
 
     <div class="callout" style="margin-top: 3rem;">
-      <strong>Important framing:</strong> The demo's $60K&ndash;$180K replacement cost is <em>not</em> the cost of shipping the real Dovito Ad Display product. The production codebase is ~35% larger, includes a real backend, a real database, real Stripe integration, and real auth &mdash; its own cost analysis (in the companion audit dated April 6, 2026) puts it at <strong>$188K&ndash;$414K</strong>.
+      <strong>Important framing:</strong> The demo's $60K&ndash;$180K replacement cost is <em>not</em> the cost of shipping the real Dovito Ad Display product. The production codebase is ~35% larger, includes a real backend, a real database, real Stripe integration, and real auth &mdash; its own cost analysis puts it materially higher.
     </div>
   </div>
 </details>
@@ -777,12 +786,14 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
     <div class="timeline">
       <div class="timeline-item">
         <div class="timeline-dot ember"></div>
-        <div class="timeline-phase" style="color: var(--ember);">Phase 1 &ndash; Immediate (days)</div>
-        <h3>Clean up the shipped artifact</h3>
-        <p>These fixes take hours, not weeks, and remove the honest-but-avoidable findings from this audit.</p>
+        <div class="timeline-phase" style="color: var(--ember);">Phase 1 &ndash; Immediate (hours)</div>
+        <h3>Finish cleaning up the shipped artifact</h3>
+        <p>The second round of fixes knocked out eight issues already. These are the remaining avoidable findings, each a few-line change.</p>
         <div class="timeline-tasks">
-          <span class="task-tag">Disable source maps in production build</span>
-          <span class="task-tag">Add <code>rel="noopener"</code> to 2 external links</span>
+          <span class="task-tag">Set <code>productionBrowserSourceMaps: false</code> in <code>next.config.ts</code></span>
+          <span class="task-tag">Add <code>xmllint</code> gate to validate SVGs on build</span>
+          <span class="task-tag">Replace ~25 <code>any</code> casts in application source</span>
+          <span class="task-tag">Make the mock router's fallback return a 404-shape error in dev</span>
           <span class="task-tag">Run <code>npm audit fix</code> for the high + moderate advisories</span>
           <span class="task-tag">Add a root React error boundary</span>
         </div>
@@ -792,13 +803,14 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
         <div class="timeline-dot amber"></div>
         <div class="timeline-phase" style="color: var(--amber);">Phase 2 &ndash; Short-term (weeks)</div>
         <h3>Harden the demo as a reference artifact</h3>
-        <p>If the demo is going to keep earning its keep as a sales artifact, these changes make it more resilient and more useful.</p>
+        <p>If the demo keeps earning its keep as a sales artifact, these changes make it more resilient and more useful.</p>
         <div class="timeline-tasks">
-          <span class="task-tag">Add Vitest + a smoke test suite for mock routing</span>
-          <span class="task-tag">Simulate error responses in mock layer for at least 5% of calls</span>
+          <span class="task-tag">Vitest + smoke test suite for mock routing</span>
+          <span class="task-tag">Simulate error responses in the mock layer for at least 5% of calls</span>
           <span class="task-tag">Memoize expensive admin dashboard computations</span>
-          <span class="task-tag">Front-load the store: single load + in-memory mirror, write-through to localStorage</span>
+          <span class="task-tag">In-memory store mirror + write-through persistence</span>
           <span class="task-tag">Deploy behind a CDN that injects security headers</span>
+          <span class="task-tag">Automate localStorage schema version bumps</span>
         </div>
       </div>
 
@@ -837,8 +849,8 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 <div class="divider"><hr></div>
 
 <div class="footer">
-  <strong>Dovito Business Solutions</strong> &ndash; Public Case Study Audit &ndash; April 9, 2026<br>
-  Subject: <code>dovito-public/dovito-ad-display-demo</code> @ <code>f6d21ca</code>
+  <strong>Dovito Business Solutions</strong> &ndash; Public Case Study Audit &ndash; April 9, 2026 (Refresh)<br>
+  Subject: <code>dovito-public/dovito-ad-display-demo</code> @ <code>d4a9016</code>
 </div>
 
 <script>

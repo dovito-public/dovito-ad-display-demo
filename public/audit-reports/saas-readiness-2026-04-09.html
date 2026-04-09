@@ -143,24 +143,24 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 <div class="case-study-notice">
   <strong>Example audit</strong> &mdash; performed on the public demo repository
   <a href="https://github.com/dovito-public/dovito-ad-display-demo" target="_blank" rel="noopener">dovito-public/dovito-ad-display-demo</a>
-  at commit <code>f6d21ca</code>. Reproduces the same methodology we apply to paid client engagements. All findings verifiable in the
-  <a href="https://github.com/dovito-public/dovito-ad-display-demo/tree/f6d21ca0b7d9cd98eaeedf7804c2a9b1adda9cec" target="_blank" rel="noopener">linked repo</a>
+  at commit <code>d4a9016</code>. Reproduces the same methodology we apply to paid client engagements. All findings verifiable in the
+  <a href="https://github.com/dovito-public/dovito-ad-display-demo/tree/d4a9016a3aafcf8ebbbddcc7221fa4c6932b00ee" target="_blank" rel="noopener">linked repo</a>
   &middot; <a href="https://dovito-public.github.io/dovito-ad-display-demo/" target="_blank" rel="noopener">live demo</a>.
 </div>
 
 <div class="top-nav">
   <h1>SaaS Readiness Assessment</h1>
   <div class="meta">
-    <span class="version">April 9, 2026</span>
+    <span class="version">April 9, 2026 &middot; Refresh</span>
     <span class="status-pill">PUBLIC CASE STUDY</span>
   </div>
 </div>
 
 <div class="hero">
   <div class="hero-content">
-    <div class="badge">Phase 6 Deep-Dive</div>
+    <div class="badge">Phase 6 Deep-Dive &middot; Refreshed</div>
     <h1>SaaS <span>Readiness</span></h1>
-    <p>Can the Dovito Ad Display demo become a multi-tenant SaaS? A 7-dimension gap analysis.</p>
+    <p>Can the Dovito Ad Display demo become a multi-tenant SaaS? A 7-dimension gap analysis. Refreshed at commit <code>d4a9016</code>.</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="number" style="color: var(--ember);">10%</span><span class="label">Overall Readiness</span></div>
       <div class="hero-stat"><span class="number">7</span><span class="label">Dimensions</span></div>
@@ -173,7 +173,7 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 <section>
   <div class="section-label">Executive Summary</div>
   <h2>Headline: A full backend rebuild is required</h2>
-  <p class="section-desc">The demo is a frontend-only fork with no database, no auth provider, no billing, and no server. On the SaaS-readiness rubric, it scores 10% overall &mdash; a number that is not a failure, but a direct and expected consequence of the demo's scope.</p>
+  <p class="section-desc">The demo is a frontend-only fork with no database, no auth provider, no billing, and no server. On the SaaS-readiness rubric, it scores 10% overall &mdash; a number that is not a failure, but a direct and expected consequence of the demo's scope. This refresh was produced after a round of targeted fixes that improved the demo's frontend posture (React correctness, asset paths, query client defaults) but did not &mdash; and could not &mdash; change anything about the seven SaaS dimensions below.</p>
 
   <div class="callout ember">
     <strong>The value of the assessment is not the headline score.</strong> Even when the answer is "this cannot become a SaaS without a full backend rebuild," the structured gap analysis below tells a prospect exactly what needs to be built, in what order, and roughly what it will cost. That is the deliverable clients are paying for: a priced, phased, dependency-ordered plan &mdash; not a letter grade.
@@ -213,7 +213,7 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
       </div>
       <div class="dimension-score ember">0%</div>
     </div>
-    <p style="color: var(--shale);">The demo has no backend. All state lives in a single browser <code>localStorage</code> key (<code>dovito-demo-v1</code>), which is globally scoped to the visitor. There is no concept of an organization, no tenant column on any mock "table," and every admin user sees every record. This is not a failing of the demo &mdash; it is structurally impossible to multi-tenant a static frontend without a backend.</p>
+    <p style="color: var(--shale);">The demo has no backend. All state lives in a single browser <code>localStorage</code> key (<code>dovito-demo-v2</code> &mdash; bumped from <code>v1</code> when the demo-image URLs were migrated to <code>basePath</code>-prefixed paths), which is globally scoped to the visitor. There is no concept of an organization, no tenant column on any mock "table," and every admin user sees every record. This is not a failing of the demo &mdash; it is structurally impossible to multi-tenant a static frontend without a backend.</p>
 
     <div class="dim-grid">
       <div class="dim-col current">
@@ -271,7 +271,7 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
       </div>
       <div class="dimension-score ember">5%</div>
     </div>
-    <p style="color: var(--shale);">The demo has a login form and a rudimentary role model &mdash; but role is determined by string-matching the email address in <code>mock-auth.ts:13</code>. Type "admin@example.com" and you are admin. Type "super@example.com" and you are super-admin. There is no password field, no verification, no session token, no expiry.</p>
+    <p style="color: var(--shale);">The demo has a login form and a rudimentary role model &mdash; but role is determined by string-matching the email address in <code>mock-auth.ts:21</code>. The refreshed login page at <code>src/app/login/page.tsx</code> has been stripped down to a single "Sign in as Admin" button that is honest about demo mode, but the underlying identity model is unchanged: no password, no verification, no session token, no expiry.</p>
     <div class="dim-grid">
       <div class="dim-col current">
         <h4>What Exists</h4>
@@ -609,8 +609,8 @@ h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
 </section>
 
 <div class="footer">
-  <strong>Dovito Business Solutions</strong> &ndash; SaaS Readiness Assessment &ndash; April 9, 2026<br>
-  Subject: <code>dovito-public/dovito-ad-display-demo</code> @ <code>f6d21ca</code>
+  <strong>Dovito Business Solutions</strong> &ndash; SaaS Readiness Assessment &ndash; April 9, 2026 (Refresh)<br>
+  Subject: <code>dovito-public/dovito-ad-display-demo</code> @ <code>d4a9016</code>
 </div>
 </body>
 </html>
