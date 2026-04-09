@@ -27,7 +27,7 @@
 
 <text x='80' y='560' font-family='Inter, sans-serif' font-size='44' font-weight='400' fill='#6b2f00' opacity='0.85'>Fresh bread baked daily since 1987</text>
 <rect x='80' y='600' width='80' height='4' fill='#c84a00'/>
-<text x='80' y='660' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#6b2f00' letter-spacing='0.5'>Open 6am–6pm  ·  Main & 5th  ·  555-0110</text>
+<text x='80' y='660' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#6b2f00' letter-spacing='0.5'>Open 6am–6pm  ·  Main &amp; 5th  ·  555-0110</text>
 <g transform='translate(80 960)'>
 <rect x='0' y='0' width='70' height='70' rx='4' fill='#6b2f00'/>
 <g fill='#c84a00'>

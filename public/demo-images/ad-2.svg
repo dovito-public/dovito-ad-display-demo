@@ -29,7 +29,7 @@
 <text x='80' y='580' font-family='Merriweather, Georgia, serif' font-size='120' font-weight='800' fill='#1b5e20' letter-spacing='-2'>Corner Market</text>
 <text x='80' y='680' font-family='Inter, sans-serif' font-size='44' font-weight='400' fill='#1b5e20' opacity='0.85'>Fresh produce · Local suppliers · Everyday low prices</text>
 <rect x='80' y='720' width='80' height='4' fill='#ff6f00'/>
-<text x='80' y='780' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#1b5e20' letter-spacing='0.5'>Open 7 days  ·  Corner of Oak & 3rd  ·  555-0111</text>
+<text x='80' y='780' font-family='Inter, sans-serif' font-size='30' font-weight='500' fill='#1b5e20' letter-spacing='0.5'>Open 7 days  ·  Corner of Oak &amp; 3rd  ·  555-0111</text>
 <g transform='translate(80 960)'>
 <rect x='0' y='0' width='70' height='70' rx='4' fill='#1b5e20'/>
 <g fill='#ff6f00'>
