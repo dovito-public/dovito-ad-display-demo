@@ -5,7 +5,7 @@ and local advertising platform built on Next.js, React, Tailwind, and
 shadcn/ui. This repo is the subject of our first public platform audit case
 study.
 
-**Live demo:** https://mncoleman.github.io/dovito-ad-display-demo/
+**Live demo:** https://dovito-public.github.io/dovito-ad-display-demo/
 
 ## What this is
 
