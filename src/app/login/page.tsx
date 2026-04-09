@@ -1,11 +1,8 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { mockAuth } from "@/lib/mock-auth";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,69 +11,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
-const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(1, "Password is required"),
-});
-
-type LoginFormData = z.infer<typeof loginSchema>;
-
 function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const errorParam = searchParams.get("error");
 
-  const form = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
-
-  const onSubmit = async (data: LoginFormData) => {
+  const handleAdminSignIn = () => {
     setIsLoading(true);
-    try {
-      const user = mockAuth.signIn(data.email);
-      toast.success("Login Successful (Demo)", {
-        description: `Signed in as ${user.email}`,
-      });
-      const isAdmin = user.role === "admin" || user.role === "super_admin";
-      router.push(isAdmin ? "/admin" : "/dashboard");
-    } catch {
-      toast.error("Login Error", {
-        description: "An error occurred while logging in",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setIsLoading(true);
-    try {
-      mockAuth.signIn("demo-google@dovito.com");
-      router.push("/dashboard");
-    } catch {
-      toast.error("Login Error", {
-        description: "An error occurred with Google sign-in",
-      });
-      setIsLoading(false);
-    }
+    const u = mockAuth.signIn("admin@dovito.com");
+    toast.success("Signed in as admin (demo)", { description: u.email });
+    router.push("/admin");
   };
 
   return (
@@ -85,180 +30,27 @@ function LoginForm() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Admin Login</CardTitle>
           <CardDescription>
-            Enter your credentials to access the admin panel
+            Demo mode — click below to enter as the admin user
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="rounded-md border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm">
-            <p className="font-semibold text-yellow-900 mb-2">Demo mode — one-click sign-in</p>
-            <p className="text-yellow-800 mb-3 text-xs">No real password required. Click a role below to enter the demo as that user.</p>
-            <div className="grid grid-cols-1 gap-2">
-              <Button
-                type="button"
-                variant="default"
-                className="w-full justify-start text-left h-auto py-2"
-                onClick={() => {
-                  const u = mockAuth.signIn("super@dovito.com");
-                  toast.success("Signed in as super admin (demo)", { description: u.email });
-                  router.push("/admin");
-                }}
-                disabled={isLoading}
-              >
-                <div className="flex flex-col items-start">
-                  <span className="font-semibold">Super Admin</span>
-                  <span className="text-xs opacity-80">super@dovito.com</span>
-                </div>
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full justify-start text-left h-auto py-2"
-                onClick={() => {
-                  const u = mockAuth.signIn("admin@dovito.com");
-                  toast.success("Signed in as admin (demo)", { description: u.email });
-                  router.push("/admin");
-                }}
-                disabled={isLoading}
-              >
-                <div className="flex flex-col items-start">
-                  <span className="font-semibold">Admin</span>
-                  <span className="text-xs opacity-80">admin@dovito.com</span>
-                </div>
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full justify-start text-left h-auto py-2"
-                onClick={() => {
-                  const u = mockAuth.signIn("rosa@rosasbakery.com");
-                  toast.success("Signed in as user (demo)", { description: u.email });
-                  router.push("/dashboard");
-                }}
-                disabled={isLoading}
-              >
-                <div className="flex flex-col items-start">
-                  <span className="font-semibold">Regular User</span>
-                  <span className="text-xs opacity-80">rosa@rosasbakery.com</span>
-                </div>
-              </Button>
-            </div>
+            <p className="text-yellow-800 text-xs">
+              This is a public demo. No real password is required. The live
+              product uses email/password and Google sign-in — both are
+              stripped out here.
+            </p>
           </div>
-          {errorParam === "EmailNotVerified" && (
-            <div className="rounded-md bg-yellow-50 border border-yellow-200 px-4 py-3 text-sm text-yellow-800">
-              Please verify your email address before signing in. Check your inbox for the verification link.
-            </div>
-          )}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        {...field}
-                        disabled={isLoading}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
-                          {...field}
-                          disabled={isLoading}
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                          onClick={() => setShowPassword(!showPassword)}
-                          disabled={isLoading}
-                        >
-                          {showPassword ? (
-                            <EyeOff className="h-4 w-4" />
-                          ) : (
-                            <Eye className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="flex justify-end">
-                <a href="/forgot-password" className="text-sm text-blue-600 hover:underline">
-                  Forgot your password?
-                </a>
-              </div>
-
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
-          </Form>
-
-          <p className="text-center text-sm text-gray-500 mt-4">
-            Don&apos;t have an account?{" "}
-            <a href="/register" className="text-blue-600 hover:underline font-medium">
-              Create one
-            </a>
-          </p>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <span className="w-full border-t" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
           <Button
-            variant="outline"
-            className="w-full"
-            onClick={handleGoogleSignIn}
+            type="button"
+            className="w-full h-auto py-3"
+            onClick={handleAdminSignIn}
             disabled={isLoading}
           >
-            <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
-              <path
-                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
-                fill="#4285F4"
-              />
-              <path
-                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                fill="#34A853"
-              />
-              <path
-                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                fill="#FBBC05"
-              />
-              <path
-                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                fill="#EA4335"
-              />
-            </svg>
-            Sign in with Google
+            <div className="flex flex-col items-center">
+              <span className="font-semibold">Sign in as Admin</span>
+              <span className="text-xs opacity-80">admin@dovito.com</span>
+            </div>
           </Button>
         </CardContent>
       </Card>
