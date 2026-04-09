@@ -12,7 +12,9 @@ import {
   MOCK_HEARTBEAT,
 } from "./mock-data";
 
-const STORAGE_KEY = "dovito-demo-v1";
+// Bumped to v2 when the demo-image paths were prefixed with basePath; older
+// cached stores point at broken /demo-images/ URLs that 404 under GH Pages.
+const STORAGE_KEY = "dovito-demo-v2";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Store = { [k: string]: any };

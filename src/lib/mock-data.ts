@@ -13,6 +13,14 @@ import type {
 const now = new Date("2026-04-09T12:00:00Z");
 const daysAgo = (d: number) => new Date(now.getTime() - d * 24 * 60 * 60 * 1000);
 
+// Prepend the Next.js basePath to static public assets so that plain <img>
+// tags resolve correctly under GitHub Pages (where the site is served from
+// /dovito-ad-display-demo/, not the origin root). next/image handles this
+// automatically; plain <img src="/foo"> does not.
+const BASE_PATH =
+  process.env.NODE_ENV === "production" ? "/dovito-ad-display-demo" : "";
+const asset = (p: string) => `${BASE_PATH}${p}`;
+
 export const MOCK_USERS: User[] = [
   {
     id: "u_superadmin",
@@ -142,7 +150,7 @@ export const MOCK_APPLICATIONS: Application[] = businesses.map((name, i) => ({
   contact_name: ["Alex", "Jordan", "Taylor", "Casey", "Morgan"][i % 5] + " " + name.split(" ")[0],
   contact_email: `contact${i + 1}@example.com`,
   contact_phone: `555-010${(i + 10).toString().padStart(2, "0")}`,
-  advertisement_image_url: `/demo-images/ad-${(i % 8) + 1}.svg`,
+  advertisement_image_url: asset(`/demo-images/ad-${(i % 8) + 1}.svg`),
   qr_url: `https://example.com/${i + 1}`,
   display_duration_seconds: 30,
   status: statuses[i] || "pending_approval",
@@ -168,7 +176,7 @@ export const MOCK_APPLICATIONS: Application[] = businesses.map((name, i) => ({
 export const MOCK_SLIDES: Slide[] = Array.from({ length: 8 }, (_, i) => ({
   id: i + 1,
   application_id: i + 1,
-  advertisement_image_url: `/demo-images/ad-${i + 1}.svg`,
+  advertisement_image_url: asset(`/demo-images/ad-${i + 1}.svg`),
   qr_url: `https://example.com/${i + 1}`,
   business_name: businesses[i],
   is_visible: i < 6,
@@ -272,7 +280,7 @@ export const MOCK_IMPRESSIONS: Impression[] = (() => {
 export const MOCK_IMAGE_LIBRARY: ImageLibraryItem[] = Array.from({ length: 10 }, (_, i) => ({
   id: `img_${i + 1}`,
   name: `demo-image-${i + 1}.jpg`,
-  url: `/demo-images/ad-${(i % 8) + 1}.svg`,
+  url: asset(`/demo-images/ad-${(i % 8) + 1}.svg`),
   size: 250_000 + i * 10_000,
   created_at: daysAgo(i * 2),
 }));

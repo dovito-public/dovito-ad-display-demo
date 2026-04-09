@@ -8,6 +8,10 @@ import {
   findOne,
 } from "./mock-store";
 import { MOCK_METRICS } from "./mock-data";
+
+const BASE_PATH =
+  process.env.NODE_ENV === "production" ? "/dovito-ad-display-demo" : "";
+const DEFAULT_AD_IMAGE = `${BASE_PATH}/demo-images/ad-1.svg`;
 import type {
   Slide,
   Application,
@@ -60,7 +64,7 @@ function route(
     return insertOne<Slide>("slides", {
       id: 0,
       application_id: null,
-      advertisement_image_url: data?.advertisement_image_url || "/demo-images/ad-1.svg",
+      advertisement_image_url: data?.advertisement_image_url || DEFAULT_AD_IMAGE,
       qr_url: data?.qr_url || null,
       business_name: data?.business_name || "New Slide",
       is_visible: false,
@@ -78,7 +82,7 @@ function route(
     return insertOne<Slide>("slides", {
       id: 0,
       application_id: null,
-      advertisement_image_url: data?.advertisement_image_url || "/demo-images/ad-1.svg",
+      advertisement_image_url: data?.advertisement_image_url || DEFAULT_AD_IMAGE,
       qr_url: data?.qr_url || null,
       business_name: data?.business_name || "Manual Slide",
       is_visible: false,
@@ -188,7 +192,7 @@ function route(
       contact_name: data?.contact_name || "",
       contact_email: data?.contact_email || "",
       contact_phone: data?.contact_phone || "",
-      advertisement_image_url: data?.advertisement_image_url || "/demo-images/ad-1.svg",
+      advertisement_image_url: data?.advertisement_image_url || DEFAULT_AD_IMAGE,
       qr_url: data?.qr_url || null,
       display_duration_seconds: data?.display_duration_seconds || 30,
       status: "pending_approval",
@@ -215,7 +219,7 @@ function route(
     return { id: Math.floor(Math.random() * 10000) + 100, success: true };
   }
   if (path === "/api/applications/upload-images" && method === "POST") {
-    return { success: true, urls: ["/demo-images/ad-1.svg"] };
+    return { success: true, urls: [DEFAULT_AD_IMAGE] };
   }
   if (path === "/api/applications/submit-with-payment" && method === "POST") {
     return { success: true, id: Math.floor(Math.random() * 10000) + 100 };
@@ -455,7 +459,7 @@ function route(
     return { success: true };
   }
   if (path === "/api/upload-images-temp" && method === "POST") {
-    return { success: true, urls: ["/demo-images/ad-1.svg"] };
+    return { success: true, urls: [DEFAULT_AD_IMAGE] };
   }
   if (path === "/api/slides/create-examples" && method === "POST") {
     return { success: true, count: 0 };
