@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SaaS Readiness Assessment &ndash; Dovito Ad Display Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #2840F0;
+  --jet: #0C0C0F;
+  --paper: #F4F3EE;
+  --ember: #E8620A;
+  --sage: #2E7D52;
+  --amber: #D4970A;
+  --shale: #3D4452;
+  --concrete: #7A8394;
+  --dust: #C8CDD6;
+  --fog: #EDEEF1;
+  --grid: #8FA4C8;
+  --elevation: #3A5075;
+  --trace: #DCE6F5;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: clip; max-width: 100vw; }
+body { overflow-x: clip; font-family: 'Roboto', -apple-system, sans-serif; background: #fff; color: var(--jet); line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+
+.case-study-notice { background: rgba(40, 64, 240, 0.06); border-bottom: 1px solid rgba(40, 64, 240, 0.2); padding: 1rem 2rem; font-size: 0.875rem; color: var(--shale); text-align: center; }
+.case-study-notice strong { color: var(--blue); }
+.case-study-notice code { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; background: #fff; padding: 2px 6px; border-radius: 4px; color: var(--blue); border: 1px solid var(--dust); }
+.case-study-notice a { color: var(--blue); text-decoration: none; font-weight: 600; }
+.case-study-notice a:hover { text-decoration: underline; }
+
+.top-nav { background: var(--jet); color: #fff; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 101; }
+.top-nav h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.top-nav .meta { display: flex; gap: 12px; align-items: center; }
+.top-nav .version { font-size: 13px; color: var(--concrete); font-weight: 500; }
+.top-nav .status-pill { background: var(--blue); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.04em; }
+
+.hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(40, 64, 240, 0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, rgba(40, 64, 240, 0.04) 0%, transparent 40%); animation: drift 20s ease-in-out infinite alternate; }
+@keyframes drift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(-2%, 2%) rotate(1deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.badge { display: inline-block; padding: 6px 16px; border: 1px solid rgba(40, 64, 240, 0.3); border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 2rem; }
+.hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem; }
+.hero h1 span { color: var(--blue); }
+.hero p { font-size: 1.25rem; color: var(--shale); max-width: 640px; margin: 0 auto 3rem; }
+.hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; }
+.hero-stat { text-align: center; }
+.hero-stat .number { font-size: 2.5rem; font-weight: 800; color: var(--blue); display: block; }
+.hero-stat .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concrete); }
+
+section { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; }
+h2 { font-size: 2.25rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; }
+h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; }
+h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
+.section-desc { font-size: 1.125rem; color: var(--shale); max-width: 700px; margin-bottom: 2rem; }
+.divider { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+.divider hr { border: none; border-top: 1px solid var(--dust); }
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.metric-box { background: var(--fog); border: 1px solid var(--dust); border-radius: 12px; padding: 1.5rem; text-align: center; }
+.metric-box .value { font-size: 2rem; font-weight: 800; color: var(--blue); display: block; }
+.metric-box .metric-label { font-size: 0.8125rem; color: var(--shale); margin-top: 0.25rem; }
+
+.bar-chart { margin: 1.5rem 0; }
+.bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+.bar-label-wide { min-width: 220px; font-size: 0.875rem; font-weight: 500; color: var(--shale); }
+.bar-track { flex: 1; height: 10px; background: var(--fog); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; }
+.bar-fill.blue { background: var(--blue); }
+.bar-fill.sage { background: var(--sage); }
+.bar-fill.amber { background: var(--amber); }
+.bar-fill.ember { background: var(--ember); }
+.bar-value { min-width: 60px; text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; font-weight: 500; color: var(--jet); }
+
+.flow-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.flow-table th { text-align: left; padding: 1rem; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concrete); border-bottom: 2px solid var(--dust); }
+.flow-table td { padding: 1rem; border-bottom: 1px solid var(--fog); color: var(--shale); vertical-align: top; }
+.flow-table code { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; background: var(--fog); padding: 2px 6px; border-radius: 4px; color: var(--blue); }
+
+.callout { background: rgba(40, 64, 240, 0.04); border: 1px solid rgba(40, 64, 240, 0.15); border-radius: 12px; padding: 1.5rem 2rem; margin: 2rem 0; font-size: 0.9375rem; color: var(--shale); }
+.callout strong { color: var(--blue); }
+.callout.amber { background: rgba(212, 151, 10, 0.05); border-color: rgba(212, 151, 10, 0.2); }
+.callout.amber strong { color: var(--amber); }
+.callout.ember { background: rgba(232, 98, 10, 0.05); border-color: rgba(232, 98, 10, 0.2); }
+.callout.ember strong { color: var(--ember); }
+
+.dimension { background: #fff; border: 1px solid var(--dust); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; }
+.dimension-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; flex-wrap: wrap; }
+.dimension-score { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 800; padding: 6px 16px; border-radius: 8px; }
+.dimension-score.ember { color: var(--ember); background: rgba(232, 98, 10, 0.1); }
+.dimension-score.amber { color: var(--amber); background: rgba(212, 151, 10, 0.1); }
+.dimension-score.blue { color: var(--blue); background: rgba(40, 64, 240, 0.1); }
+.dimension-score.sage { color: var(--sage); background: rgba(46, 125, 82, 0.1); }
+.dimension h3 { margin-bottom: 0.25rem; }
+.dimension-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--concrete); }
+.dim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+.dim-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.dim-col.current h4 { color: var(--sage); }
+.dim-col.gap h4 { color: var(--ember); }
+.dim-col ul { list-style: none; }
+.dim-col ul li { padding: 0.35rem 0; font-size: 0.9rem; color: var(--shale); padding-left: 1rem; position: relative; }
+.dim-col.current ul li::before { content: '\2713'; position: absolute; left: 0; color: var(--sage); }
+.dim-col.gap ul li::before { content: '\2715'; position: absolute; left: 0; color: var(--ember); }
+.dim-effort { margin-top: 1rem; padding: 0.75rem 1rem; background: var(--fog); border-radius: 8px; font-size: 0.875rem; color: var(--shale); }
+.dim-effort strong { color: var(--jet); }
+
+.timeline { position: relative; padding-left: 3rem; }
+.timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--ember), var(--amber), var(--blue), var(--sage)); }
+.timeline-item { position: relative; margin-bottom: 3rem; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot { position: absolute; left: -3rem; top: 4px; width: 24px; height: 24px; border-radius: 50%; }
+.timeline-dot.blue { background: rgba(40, 64, 240, 0.12); border: 2px solid var(--blue); }
+.timeline-dot.sage { background: rgba(46, 125, 82, 0.12); border: 2px solid var(--sage); }
+.timeline-dot.amber { background: rgba(212, 151, 10, 0.12); border: 2px solid var(--amber); }
+.timeline-dot.ember { background: rgba(232, 98, 10, 0.12); border: 2px solid var(--ember); }
+.timeline-phase { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.25rem; }
+.timeline-item h3 { margin-bottom: 0.5rem; }
+.timeline-item p { color: var(--shale); font-size: 0.9375rem; margin-bottom: 1rem; }
+.timeline-tasks { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.task-tag { padding: 4px 12px; border-radius: 6px; font-size: 0.8125rem; font-weight: 500; background: var(--fog); color: var(--shale); border: 1px solid var(--dust); }
+
+.footer { text-align: center; padding: 4rem 2rem; color: var(--concrete); font-size: 0.875rem; border-top: 1px solid var(--dust); }
+.footer strong { color: var(--jet); font-weight: 700; }
+.footer code { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+
+.link-btn { display: inline-block; background: var(--blue); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; }
+.link-btn:hover { background: #1a2fc8; }
+
+@media (max-width: 768px) {
+  .hero-stats { gap: 2rem; }
+  .dim-grid { grid-template-columns: 1fr; }
+  section { padding: 3rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="case-study-notice">
+  <strong>Example audit</strong> &mdash; performed on the public demo repository
+  <a href="https://github.com/mncoleman/dovito-ad-display-demo" target="_blank" rel="noopener">mncoleman/dovito-ad-display-demo</a>
+  at commit <code>f6d21ca</code>. Reproduces the same methodology we apply to paid client engagements. All findings verifiable in the
+  <a href="https://github.com/mncoleman/dovito-ad-display-demo/tree/f6d21ca0b7d9cd98eaeedf7804c2a9b1adda9cec" target="_blank" rel="noopener">linked repo</a>
+  &middot; <a href="https://mncoleman.github.io/dovito-ad-display-demo/" target="_blank" rel="noopener">live demo</a>.
+</div>
+
+<div class="top-nav">
+  <h1>SaaS Readiness Assessment</h1>
+  <div class="meta">
+    <span class="version">April 9, 2026</span>
+    <span class="status-pill">PUBLIC CASE STUDY</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="badge">Phase 6 Deep-Dive</div>
+    <h1>SaaS <span>Readiness</span></h1>
+    <p>Can the Dovito Ad Display demo become a multi-tenant SaaS? A 7-dimension gap analysis.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="number" style="color: var(--ember);">10%</span><span class="label">Overall Readiness</span></div>
+      <div class="hero-stat"><span class="number">7</span><span class="label">Dimensions</span></div>
+      <div class="hero-stat"><span class="number">$150&ndash;300K</span><span class="label">Conversion Cost</span></div>
+      <div class="hero-stat"><span class="number">4 phases</span><span class="label">Implementation</span></div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="section-label">Executive Summary</div>
+  <h2>Headline: A full backend rebuild is required</h2>
+  <p class="section-desc">The demo is a frontend-only fork with no database, no auth provider, no billing, and no server. On the SaaS-readiness rubric, it scores 10% overall &mdash; a number that is not a failure, but a direct and expected consequence of the demo's scope.</p>
+
+  <div class="callout ember">
+    <strong>The value of the assessment is not the headline score.</strong> Even when the answer is "this cannot become a SaaS without a full backend rebuild," the structured gap analysis below tells a prospect exactly what needs to be built, in what order, and roughly what it will cost. That is the deliverable clients are paying for: a priced, phased, dependency-ordered plan &mdash; not a letter grade.
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-box"><span class="value" style="color: var(--ember);">10%</span><span class="metric-label">Overall Readiness</span></div>
+    <div class="metric-box"><span class="value">7</span><span class="metric-label">Dimensions Assessed</span></div>
+    <div class="metric-box"><span class="value">$150K</span><span class="metric-label">Low-end Conversion</span></div>
+    <div class="metric-box"><span class="value">$300K</span><span class="metric-label">High-end Conversion</span></div>
+  </div>
+
+  <h3 style="margin-top: 3rem;">Readiness by Dimension</h3>
+  <div class="bar-chart">
+    <div class="bar-row"><span class="bar-label-wide">1. Multi-Tenancy</span><div class="bar-track"><div class="bar-fill ember" style="width: 0%;"></div></div><span class="bar-value">0%</span></div>
+    <div class="bar-row"><span class="bar-label-wide">2. User Management</span><div class="bar-track"><div class="bar-fill ember" style="width: 5%;"></div></div><span class="bar-value">5%</span></div>
+    <div class="bar-row"><span class="bar-label-wide">3. Billing &amp; Subscriptions</span><div class="bar-track"><div class="bar-fill ember" style="width: 0%;"></div></div><span class="bar-value">0%</span></div>
+    <div class="bar-row"><span class="bar-label-wide">4. Customization</span><div class="bar-track"><div class="bar-fill amber" style="width: 30%;"></div></div><span class="bar-value">30%</span></div>
+    <div class="bar-row"><span class="bar-label-wide">5. API Design</span><div class="bar-track"><div class="bar-fill amber" style="width: 20%;"></div></div><span class="bar-value">20%</span></div>
+    <div class="bar-row"><span class="bar-label-wide">6. Onboarding</span><div class="bar-track"><div class="bar-fill amber" style="width: 15%;"></div></div><span class="bar-value">15%</span></div>
+    <div class="bar-row"><span class="bar-label-wide">7. Monitoring &amp; Ops</span><div class="bar-track"><div class="bar-fill ember" style="width: 0%;"></div></div><span class="bar-value">0%</span></div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Dimension 1 of 7</div>
+  <h2>Multi-Tenancy</h2>
+  <p class="section-desc">Can the system isolate data, users, and settings between multiple customer organizations?</p>
+
+  <div class="dimension">
+    <div class="dimension-header">
+      <div>
+        <div class="dimension-label">Score</div>
+        <h3>No tenancy substrate exists</h3>
+      </div>
+      <div class="dimension-score ember">0%</div>
+    </div>
+    <p style="color: var(--shale);">The demo has no backend. All state lives in a single browser <code>localStorage</code> key (<code>dovito-demo-v1</code>), which is globally scoped to the visitor. There is no concept of an organization, no tenant column on any mock "table," and every admin user sees every record. This is not a failing of the demo &mdash; it is structurally impossible to multi-tenant a static frontend without a backend.</p>
+
+    <div class="dim-grid">
+      <div class="dim-col current">
+        <h4>What Exists</h4>
+        <ul>
+          <li>Single global data namespace under one localStorage key</li>
+          <li>Schema types (<code>src/lib/schema.ts</code>) derived from the production codebase &mdash; include no tenant fields</li>
+          <li>User records exist but are not scoped to any org</li>
+        </ul>
+      </div>
+      <div class="dim-col gap">
+        <h4>Gaps</h4>
+        <ul>
+          <li>No <code>organization</code> or <code>tenant</code> entity</li>
+          <li>No <code>tenant_id</code> column on any record</li>
+          <li>No query-level scoping layer</li>
+          <li>No cross-tenant aggregation for platform admins</li>
+          <li>No tenant-scoped auth tokens or session claims</li>
+          <li>No row-level security</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dim-effort"><strong>Required work:</strong> Introduce a real persistence layer with an <code>organizations</code> table; add <code>organization_id</code> FK to every business record; implement a query-scoping layer (the production code's <code>IStorage</code> pattern is a good target); add platform-admin vs org-admin role tiers. <strong>Effort:</strong> 2&ndash;4 weeks of focused backend work.</div>
+  </div>
+
+  <h3 style="margin-top: 2rem;">Component-by-Component Multi-Tenancy Audit</h3>
+  <p style="color: var(--shale); margin-bottom: 1rem;">Every component below assumes single-tenant global state. Each would need to be rewired once a tenant context exists.</p>
+  <table class="flow-table">
+    <thead><tr><th>Component / Page</th><th>Tenancy Assumption</th><th>Remediation</th></tr></thead>
+    <tbody>
+      <tr><td><code>admin/page.tsx</code></td><td>Lists all slides, applications, users globally</td><td>Scope queries by tenant; add platform-admin escape hatch</td></tr>
+      <tr><td><code>dashboard/page.tsx</code></td><td>Shows "user's own" records, but "user" = browser session</td><td>Derive user from real session; scope by their org</td></tr>
+      <tr><td><code>display/page.tsx</code></td><td>Single display surface, single brand</td><td>Per-tenant branding + display settings keyed on org</td></tr>
+      <tr><td><code>brand-kit/page.tsx</code></td><td>Hardcoded to one brand</td><td>Per-tenant brand kit record</td></tr>
+      <tr><td><code>mock-api.ts</code> admin routes</td><td>All <code>/api/admin/*</code> endpoints return global collections</td><td>Enforce org scoping at the data layer</td></tr>
+      <tr><td><code>mock-store.ts</code></td><td>Single root store object</td><td>Replace with real DB; ensure every query filters by tenant</td></tr>
+      <tr><td>Audit log viewer</td><td>Shows global audit entries</td><td>Scope entries by org; allow platform-admin cross-tenant view</td></tr>
+      <tr><td>Webhooks settings</td><td>Single global webhook list</td><td>Scope per org</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Dimension 2 of 7</div>
+  <h2>User Management</h2>
+  <p class="section-desc">Identity, roles, permissions, SSO, MFA, invitations, audit.</p>
+
+  <div class="dimension">
+    <div class="dimension-header">
+      <div>
+        <div class="dimension-label">Score</div>
+        <h3>Cosmetic sign-in only</h3>
+      </div>
+      <div class="dimension-score ember">5%</div>
+    </div>
+    <p style="color: var(--shale);">The demo has a login form and a rudimentary role model &mdash; but role is determined by string-matching the email address in <code>mock-auth.ts:13</code>. Type "admin@example.com" and you are admin. Type "super@example.com" and you are super-admin. There is no password field, no verification, no session token, no expiry.</p>
+    <div class="dim-grid">
+      <div class="dim-col current">
+        <h4>What Exists</h4>
+        <ul>
+          <li>Login, register, forgot-password, reset-password, verify-email pages (all UI-only)</li>
+          <li>Three-tier role model: <code>user</code> / <code>admin</code> / <code>super_admin</code></li>
+          <li>React Query-based session observer in <code>mock-auth.ts</code></li>
+        </ul>
+      </div>
+      <div class="dim-col gap">
+        <h4>Gaps</h4>
+        <ul>
+          <li>No real password storage or verification</li>
+          <li>No session tokens / JWTs / cookies</li>
+          <li>No email verification</li>
+          <li>No SSO (Google / Microsoft / SAML / OIDC)</li>
+          <li>No MFA / TOTP / WebAuthn</li>
+          <li>No invitation flow for org members</li>
+          <li>No audit trail for auth events</li>
+          <li>No API keys for programmatic access</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dim-effort"><strong>Required work:</strong> Reintroduce NextAuth v5 (the production codebase already uses it); implement credentials + Google OAuth; add invitation flow; add API key model; implement audit trail. <strong>Effort:</strong> 1&ndash;2 weeks.</div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Dimension 3 of 7</div>
+  <h2>Billing &amp; Subscriptions</h2>
+  <p class="section-desc">Payment processing, subscription lifecycle, invoicing, dunning, tax.</p>
+
+  <div class="dimension">
+    <div class="dimension-header">
+      <div>
+        <div class="dimension-label">Score</div>
+        <h3>Stripe amputated; fake card UI</h3>
+      </div>
+      <div class="dimension-score ember">0%</div>
+    </div>
+    <p style="color: var(--shale);">Stripe was explicitly removed from the demo as part of the backend amputation. The <code>collect-payment/page.tsx</code> page was rewritten to render a fake card input (it collects nothing, charges nothing). Stubs exist in <code>mock-api.ts</code> for <code>create-checkout-session</code>, <code>create-payment-intent</code>, <code>create-subscription</code>, and <code>validate-coupon</code> &mdash; all return canned success responses. One hardcoded demo coupon code (<code>LAUNCH20</code>) exists.</p>
+    <div class="dim-grid">
+      <div class="dim-col current">
+        <h4>What Exists</h4>
+        <ul>
+          <li>Checkout UI flow (non-functional)</li>
+          <li>Mock endpoints returning canned responses</li>
+          <li>Hardcoded <code>LAUNCH20</code> coupon for demo</li>
+          <li>Billing portal link button (stub)</li>
+        </ul>
+      </div>
+      <div class="dim-col gap">
+        <h4>Gaps</h4>
+        <ul>
+          <li>No real Stripe integration</li>
+          <li>No subscription lifecycle state machine</li>
+          <li>No webhook handlers (no signing verification possible)</li>
+          <li>No invoice generation</li>
+          <li>No dunning (failed-payment recovery)</li>
+          <li>No proration / upgrade / downgrade logic</li>
+          <li>No tax calculation (Stripe Tax / Avalara)</li>
+          <li>No multi-currency support</li>
+          <li>No metered usage billing</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dim-effort"><strong>Required work:</strong> Reintroduce Stripe Checkout + Elements + webhook handling; define platform subscription tiers; implement dunning via Stripe Smart Retries; add Stripe Tax. The production codebase already has most of this &mdash; it was deliberately removed. <strong>Effort:</strong> 1&ndash;2 weeks to reintroduce + harden for multi-tenant.</div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Dimension 4 of 7</div>
+  <h2>Customization</h2>
+  <p class="section-desc">Per-tenant branding, display settings, email templates, custom domains.</p>
+
+  <div class="dimension">
+    <div class="dimension-header">
+      <div>
+        <div class="dimension-label">Score</div>
+        <h3>Display settings exist, globally scoped</h3>
+      </div>
+      <div class="dimension-score amber">30%</div>
+    </div>
+    <p style="color: var(--shale);">Partial credit: the demo genuinely has a settings panel (<code>/api/display-settings</code>) backed by mock persistence. Users can change display behavior and those settings persist to <code>localStorage</code>. There is also a Brand Kit page (<code>brand-kit/page.tsx</code>) that surfaces the visual system. Both are single-tenant and global, but the <em>mechanism</em> for per-tenant customization exists and would extend naturally.</p>
+    <div class="dim-grid">
+      <div class="dim-col current">
+        <h4>What Exists</h4>
+        <ul>
+          <li>Key/value display settings system (<code>display_settings</code> collection)</li>
+          <li>Settings UI in admin panel</li>
+          <li>Brand Kit reference page</li>
+          <li>Theme support via <code>next-themes</code></li>
+        </ul>
+      </div>
+      <div class="dim-col gap">
+        <h4>Gaps</h4>
+        <ul>
+          <li>Settings are global, not per-tenant</li>
+          <li>No per-tenant logo / brand colors upload</li>
+          <li>No custom email template editor</li>
+          <li>No custom domain support</li>
+          <li>No white-label mode</li>
+          <li>No localization / i18n scaffolding</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dim-effort"><strong>Required work:</strong> Key the settings table by <code>organization_id</code>; add logo/color upload (needs storage backend); build email template overrides; add custom-domain DNS verification flow. <strong>Effort:</strong> 1 week once tenancy exists.</div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Dimension 5 of 7</div>
+  <h2>API Design</h2>
+  <p class="section-desc">Is the API surface well-structured, documented, versioned, and ready for third-party integration?</p>
+
+  <div class="dimension">
+    <div class="dimension-header">
+      <div>
+        <div class="dimension-label">Score</div>
+        <h3>REST shape is good; no real API exists</h3>
+      </div>
+      <div class="dimension-score amber">20%</div>
+    </div>
+    <p style="color: var(--shale);">The mock router in <code>mock-api.ts</code> implements about 50 endpoints across slides, applications, display settings, users, webhooks, audit log, and billing stubs. The URL structure is RESTful and consistent (<code>GET /api/slides</code>, <code>POST /api/slides/:id</code>, etc.). What does not exist is a <em>real</em> API backed by anything durable, nor any form of API documentation, versioning, or authentication.</p>
+    <div class="dim-grid">
+      <div class="dim-col current">
+        <h4>What Exists</h4>
+        <ul>
+          <li>~50 mock endpoints with consistent REST-style URLs</li>
+          <li>Query/body parsing via fetch interceptor</li>
+          <li>Canned JSON responses</li>
+          <li>Webhooks CRUD UI (stub)</li>
+        </ul>
+      </div>
+      <div class="dim-col gap">
+        <h4>Gaps</h4>
+        <ul>
+          <li>No real HTTP endpoints (static export)</li>
+          <li>No OpenAPI / Swagger spec</li>
+          <li>No API versioning (<code>/api/v1</code>)</li>
+          <li>No API key auth</li>
+          <li>No rate limiting</li>
+          <li>No outbound webhook delivery</li>
+          <li>No developer portal</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dim-effort"><strong>Required work:</strong> Reintroduce Next.js API routes backed by Postgres; generate OpenAPI spec from Zod schemas; add API key model; implement webhook dispatcher with retry; build dev portal. <strong>Effort:</strong> 1&ndash;2 weeks for real endpoints + OpenAPI; another week for dev portal.</div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Dimension 6 of 7</div>
+  <h2>Onboarding</h2>
+  <p class="section-desc">Self-service signup, activation, first-run experience, setup wizard, invitations.</p>
+
+  <div class="dimension">
+    <div class="dimension-header">
+      <div>
+        <div class="dimension-label">Score</div>
+        <h3>Login form exists; nothing downstream</h3>
+      </div>
+      <div class="dimension-score amber">15%</div>
+    </div>
+    <p style="color: var(--shale);">A registration page exists and accepts input, but registration is a no-op in the mock layer. There is no organization creation, no invitation flow, no setup wizard, no activation email, no first-run tour. The demo is explicitly oriented around "look at the product while already signed in," not "experience account creation."</p>
+    <div class="dim-grid">
+      <div class="dim-col current">
+        <h4>What Exists</h4>
+        <ul>
+          <li>Register, login, forgot-password, verify-email pages</li>
+          <li>Email verification UI (no real email)</li>
+        </ul>
+      </div>
+      <div class="dim-col gap">
+        <h4>Gaps</h4>
+        <ul>
+          <li>No organization creation flow</li>
+          <li>No setup wizard / first-run tour</li>
+          <li>No team invitation flow</li>
+          <li>No activation email (no email infrastructure)</li>
+          <li>No sample-data seeding on new tenant</li>
+          <li>No progress checklist</li>
+          <li>No trial-to-paid conversion flow</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dim-effort"><strong>Required work:</strong> Depends on real auth + email. Build org creation wizard, invite flow, and activation checklist. <strong>Effort:</strong> 1 week after auth/billing exist.</div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Dimension 7 of 7</div>
+  <h2>Monitoring &amp; Operations</h2>
+  <p class="section-desc">Logging, metrics, error tracking, uptime monitoring, alerting, runbook.</p>
+
+  <div class="dimension">
+    <div class="dimension-header">
+      <div>
+        <div class="dimension-label">Score</div>
+        <h3>No telemetry whatsoever</h3>
+      </div>
+      <div class="dimension-score ember">0%</div>
+    </div>
+    <p style="color: var(--shale);">A static site on GitHub Pages has no logs, no metrics, no traces, no error reports, and no uptime instrumentation. There is no <code>console.error</code> forwarding, no Sentry, no PostHog, no OpenTelemetry. If a user hits a bug on the live demo, no one will ever know.</p>
+    <div class="dim-grid">
+      <div class="dim-col current">
+        <h4>What Exists</h4>
+        <ul>
+          <li>GitHub Pages default access logs (not accessible to the app)</li>
+        </ul>
+      </div>
+      <div class="dim-col gap">
+        <h4>Gaps</h4>
+        <ul>
+          <li>No error tracking (Sentry, Rollbar)</li>
+          <li>No frontend analytics (PostHog, Plausible)</li>
+          <li>No structured logging</li>
+          <li>No metrics / dashboards</li>
+          <li>No uptime monitoring</li>
+          <li>No alerting / on-call</li>
+          <li>No runbook / incident response</li>
+          <li>No tracing (OpenTelemetry)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dim-effort"><strong>Required work:</strong> Frontend: add Sentry and PostHog. Backend (once it exists): structured JSON logging, Prometheus metrics, error aggregation, uptime probe, incident runbook. <strong>Effort:</strong> 3&ndash;5 days to bolt on basic frontend telemetry; another week to instrument a real backend.</div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Scorecard</div>
+  <h2>Dimension Scorecard</h2>
+  <table class="flow-table" style="margin-top: 2rem;">
+    <thead><tr><th>Dimension</th><th>Score</th><th>Effort to 80%</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td>Multi-Tenancy</td><td><strong style="color: var(--ember);">0%</strong></td><td>2&ndash;4 weeks</td><td>P0 &mdash; blocking</td></tr>
+      <tr><td>User Management</td><td><strong style="color: var(--ember);">5%</strong></td><td>1&ndash;2 weeks</td><td>P0 &mdash; blocking</td></tr>
+      <tr><td>Billing &amp; Subscriptions</td><td><strong style="color: var(--ember);">0%</strong></td><td>1&ndash;2 weeks</td><td>P0 &mdash; blocking</td></tr>
+      <tr><td>Monitoring &amp; Ops</td><td><strong style="color: var(--ember);">0%</strong></td><td>1&ndash;2 weeks</td><td>P1</td></tr>
+      <tr><td>Onboarding</td><td><strong style="color: var(--amber);">15%</strong></td><td>1 week</td><td>P1</td></tr>
+      <tr><td>API Design</td><td><strong style="color: var(--amber);">20%</strong></td><td>1&ndash;2 weeks</td><td>P2</td></tr>
+      <tr><td>Customization</td><td><strong style="color: var(--amber);">30%</strong></td><td>1 week</td><td>P2</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"><hr></div>
+
+<section>
+  <div class="section-label">Implementation Order</div>
+  <h2>Four-Phase Conversion Plan</h2>
+  <p class="section-desc">Phased so each layer unblocks the next. Phases 1 and 2 are non-negotiable prerequisites for any real launch; Phases 3 and 4 are productisation.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot ember"></div>
+      <div class="timeline-phase" style="color: var(--ember);">Phase 1 &ndash; Foundation (Weeks 1&ndash;4)</div>
+      <h3>Real Backend + Database</h3>
+      <p>Rebuild the persistence layer the demo amputated. This phase unblocks every subsequent phase.</p>
+      <div class="timeline-tasks">
+        <span class="task-tag">Reintroduce Next.js API routes</span>
+        <span class="task-tag">Postgres + Drizzle schema (from production codebase)</span>
+        <span class="task-tag">Replace mock-store with real DB layer</span>
+        <span class="task-tag">Image storage backend (Supabase / S3)</span>
+        <span class="task-tag">Email transactional layer</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot amber"></div>
+      <div class="timeline-phase" style="color: var(--amber);">Phase 2 &ndash; Auth + Tenancy (Weeks 5&ndash;8)</div>
+      <h3>NextAuth + Organization Scoping</h3>
+      <p>Turn the product into a multi-tenant system. Requires Phase 1.</p>
+      <div class="timeline-tasks">
+        <span class="task-tag">NextAuth v5 + credentials + Google OAuth</span>
+        <span class="task-tag">Add organizations table + FK on all business records</span>
+        <span class="task-tag">Query scoping layer</span>
+        <span class="task-tag">Role hierarchy: platform admin / org admin / org member</span>
+        <span class="task-tag">Invitation flow + email activation</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot blue"></div>
+      <div class="timeline-phase" style="color: var(--blue);">Phase 3 &ndash; Billing (Weeks 9&ndash;10)</div>
+      <h3>Stripe Integration</h3>
+      <p>Reintroduce the Stripe layer that was amputated, this time for platform-level subscriptions.</p>
+      <div class="timeline-tasks">
+        <span class="task-tag">Stripe Checkout + Elements</span>
+        <span class="task-tag">Webhook handlers with signature verification</span>
+        <span class="task-tag">Platform subscription tiers</span>
+        <span class="task-tag">Dunning via Stripe Smart Retries</span>
+        <span class="task-tag">Stripe Tax</span>
+        <span class="task-tag">Billing portal integration</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot sage"></div>
+      <div class="timeline-phase" style="color: var(--sage);">Phase 4 &ndash; Platform Features (Weeks 11&ndash;16)</div>
+      <h3>Customization, Monitoring, APIs</h3>
+      <p>Everything that makes the product feel like a real SaaS rather than a multi-tenant version of the demo.</p>
+      <div class="timeline-tasks">
+        <span class="task-tag">Per-tenant branding / logos / colors</span>
+        <span class="task-tag">Custom email templates</span>
+        <span class="task-tag">Custom domains</span>
+        <span class="task-tag">API keys + OpenAPI spec + dev portal</span>
+        <span class="task-tag">Outbound webhook dispatcher</span>
+        <span class="task-tag">Sentry + PostHog + structured logging</span>
+        <span class="task-tag">Uptime monitoring + alerting</span>
+        <span class="task-tag">Onboarding wizard</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 3rem;">
+    <strong>Total timeline:</strong> 16 weeks (~4 months) with a single full-stack engineer working efficiently. <strong>Total cost</strong> at mid-market rates: $150K&ndash;$300K on top of the ~$100K replacement value of the demo itself. A realistic end-to-end budget to go from "demo on GitHub Pages" to "launchable SaaS" lands around <strong>$250K&ndash;$400K</strong>.
+  </div>
+
+  <p style="margin-top: 3rem; text-align: center;">
+    <a class="link-btn" href="./audit-report-2026-04-09.html">&larr; Back to Main Audit Report</a>
+  </p>
+</section>
+
+<div class="footer">
+  <strong>Dovito Business Solutions</strong> &ndash; SaaS Readiness Assessment &ndash; April 9, 2026<br>
+  Subject: <code>mncoleman/dovito-ad-display-demo</code> @ <code>f6d21ca</code>
+</div>
+</body>
+</html>

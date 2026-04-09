@@ -52,3 +52,4 @@ public/assets/animated-navbar-*.md
 public/assets/dovito.ai_*.md
 public/assets/Perplexity*.txt
 .env*.local
+AUDIT_NOTES.md

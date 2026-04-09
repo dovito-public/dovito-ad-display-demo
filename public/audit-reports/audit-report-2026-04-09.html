@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codebase Audit Report &ndash; Dovito Ad Display Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #2840F0;
+  --jet: #0C0C0F;
+  --paper: #F4F3EE;
+  --ember: #E8620A;
+  --sage: #2E7D52;
+  --amber: #D4970A;
+  --shale: #3D4452;
+  --concrete: #7A8394;
+  --dust: #C8CDD6;
+  --fog: #EDEEF1;
+  --grid: #8FA4C8;
+  --elevation: #3A5075;
+  --trace: #DCE6F5;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: clip; max-width: 100vw; }
+body { overflow-x: clip; font-family: 'Roboto', -apple-system, sans-serif; background: #fff; color: var(--jet); line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+
+.case-study-notice { background: rgba(40, 64, 240, 0.06); border-bottom: 1px solid rgba(40, 64, 240, 0.2); padding: 1rem 2rem; font-size: 0.875rem; color: var(--shale); text-align: center; }
+.case-study-notice strong { color: var(--blue); }
+.case-study-notice code { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; background: #fff; padding: 2px 6px; border-radius: 4px; color: var(--blue); border: 1px solid var(--dust); }
+.case-study-notice a { color: var(--blue); text-decoration: none; font-weight: 600; }
+.case-study-notice a:hover { text-decoration: underline; }
+
+.hero { min-height: 90vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at 30% 50%, rgba(40, 64, 240, 0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 30%, rgba(40, 64, 240, 0.04) 0%, transparent 40%); animation: drift 20s ease-in-out infinite alternate; }
+@keyframes drift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(-2%, 2%) rotate(1deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.badge { display: inline-block; padding: 6px 16px; border: 1px solid rgba(40, 64, 240, 0.3); border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 2rem; }
+.hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem; }
+.hero h1 span { color: var(--blue); }
+.hero p { font-size: 1.25rem; color: var(--shale); max-width: 640px; margin: 0 auto 3rem; }
+.hero-stats { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; }
+.hero-stat { text-align: center; }
+.hero-stat .number { font-size: 2.5rem; font-weight: 800; color: var(--blue); display: block; }
+.hero-stat .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concrete); }
+
+section { max-width: 1100px; margin: 0 auto; padding: 6rem 2rem; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; }
+h2 { font-size: 2.25rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; }
+h3 { font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; }
+h4 { font-size: 1.125rem; font-weight: 500; margin-bottom: 0.5rem; }
+.section-desc { font-size: 1.125rem; color: var(--shale); max-width: 700px; margin-bottom: 3rem; }
+.divider { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+.divider hr { border: none; border-top: 1px solid var(--dust); }
+
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 1rem; }
+.pill.blue { background: rgba(40, 64, 240, 0.1); color: var(--blue); }
+.pill.sage { background: rgba(46, 125, 82, 0.1); color: var(--sage); }
+.pill.amber { background: rgba(212, 151, 10, 0.1); color: var(--amber); }
+.pill.ember { background: rgba(232, 98, 10, 0.1); color: var(--ember); }
+.pill.elevation { background: rgba(58, 80, 117, 0.1); color: var(--elevation); }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.card { background: var(--fog); border: 1px solid var(--dust); border-radius: 12px; padding: 2rem; transition: border-color 0.2s; }
+.card:hover { border-color: var(--blue); }
+.card h4 { margin-top: 0.25rem; }
+.card p { color: var(--shale); font-size: 0.9375rem; margin-top: 0.5rem; }
+
+.arch-diagram { background: var(--fog); border: 1px solid var(--dust); border-radius: 16px; padding: 3rem; margin-bottom: 3rem; }
+.arch-layers { display: flex; flex-direction: column; gap: 1.5rem; }
+.arch-layer { border-radius: 12px; padding: 1.5rem 2rem; }
+.arch-layer.orchestrator { background: linear-gradient(135deg, rgba(40, 64, 240, 0.08), rgba(40, 64, 240, 0.03)); border: 1px solid rgba(40, 64, 240, 0.2); }
+.arch-layer.agents { background: #fff; border: 1px solid var(--dust); }
+.arch-layer.infra { background: rgba(58, 80, 117, 0.06); border: 1px solid rgba(143, 164, 200, 0.25); }
+.layer-title { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
+.layer-title.blue { color: var(--blue); }
+.layer-title.dark { color: var(--shale); }
+.layer-title.grid { color: var(--elevation); }
+.layer-items { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.layer-item { padding: 8px 16px; border-radius: 8px; font-size: 0.875rem; font-weight: 500; }
+.layer-item.blue-bg { background: rgba(40, 64, 240, 0.1); color: var(--blue); }
+.layer-item.dark-bg { background: var(--fog); color: var(--shale); border: 1px solid var(--dust); }
+.layer-item.grid-bg { background: rgba(143, 164, 200, 0.12); color: var(--elevation); }
+.flow-arrow { text-align: center; color: var(--concrete); font-size: 1.25rem; padding: 0.25rem 0; }
+
+.flow-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.flow-table th { text-align: left; padding: 1rem; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--concrete); border-bottom: 2px solid var(--dust); }
+.flow-table td { padding: 1rem; border-bottom: 1px solid var(--fog); color: var(--shale); vertical-align: top; }
+.flow-table tr:hover td { background: var(--fog); }
+.flow-table code { font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; background: var(--fog); padding: 2px 6px; border-radius: 4px; color: var(--blue); }
+
+.bar-chart { margin: 1.5rem 0; }
+.bar-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+.bar-label-wide { min-width: 220px; font-size: 0.875rem; font-weight: 500; color: var(--shale); }
+.bar-track { flex: 1; height: 8px; background: var(--fog); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+.bar-fill.blue { background: var(--blue); }
+.bar-fill.sage { background: var(--sage); }
+.bar-fill.amber { background: var(--amber); }
+.bar-fill.ember { background: var(--ember); }
+.bar-value { min-width: 60px; text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 0.8125rem; font-weight: 500; color: var(--jet); }
+
+.timeline { position: relative; padding-left: 3rem; }
+.timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(to bottom, var(--ember), var(--amber), var(--blue), var(--sage)); }
+.timeline-item { position: relative; margin-bottom: 3rem; }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-dot { position: absolute; left: -3rem; top: 4px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.timeline-dot.blue { background: rgba(40, 64, 240, 0.12); border: 2px solid var(--blue); }
+.timeline-dot.sage { background: rgba(46, 125, 82, 0.12); border: 2px solid var(--sage); }
+.timeline-dot.amber { background: rgba(212, 151, 10, 0.12); border: 2px solid var(--amber); }
+.timeline-dot.ember { background: rgba(232, 98, 10, 0.12); border: 2px solid var(--ember); }
+.timeline-phase { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.25rem; }
+.timeline-item h3 { margin-bottom: 0.5rem; }
+.timeline-item p { color: var(--shale); font-size: 0.9375rem; margin-bottom: 1rem; }
+.timeline-tasks { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.task-tag { padding: 4px 12px; border-radius: 6px; font-size: 0.8125rem; font-weight: 500; background: var(--fog); color: var(--shale); border: 1px solid var(--dust); }
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.metric-box { background: var(--fog); border: 1px solid var(--dust); border-radius: 12px; padding: 1.5rem; text-align: center; }
+.metric-box .value { font-size: 2rem; font-weight: 800; color: var(--blue); display: block; }
+.metric-box .metric-label { font-size: 0.8125rem; color: var(--shale); margin-top: 0.25rem; }
+
+.risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.risk-card { border-radius: 12px; padding: 1.5rem; }
+.risk-card.critical { background: rgba(220, 38, 38, 0.06); border: 1px solid rgba(220, 38, 38, 0.2); }
+.risk-card.high { background: rgba(232, 98, 10, 0.06); border: 1px solid rgba(232, 98, 10, 0.2); }
+.risk-card.medium { background: rgba(212, 151, 10, 0.06); border: 1px solid rgba(212, 151, 10, 0.2); }
+.risk-card.low { background: rgba(46, 125, 82, 0.06); border: 1px solid rgba(46, 125, 82, 0.2); }
+.risk-level { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.risk-card.critical .risk-level { color: #DC2626; }
+.risk-card.high .risk-level { color: var(--ember); }
+.risk-card.medium .risk-level { color: var(--amber); }
+.risk-card.low .risk-level { color: var(--sage); }
+.risk-card h4 { font-size: 1rem; margin-bottom: 0.5rem; }
+.risk-card p { font-size: 0.875rem; color: var(--shale); }
+.risk-card code { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; background: rgba(255,255,255,0.6); padding: 1px 5px; border-radius: 3px; }
+
+.footer { text-align: center; padding: 4rem 2rem; color: var(--concrete); font-size: 0.875rem; border-top: 1px solid var(--dust); }
+.footer strong { color: var(--jet); font-weight: 700; }
+
+.top-nav { background: var(--jet); color: #fff; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 101; }
+.top-nav h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+.top-nav .meta { display: flex; gap: 12px; align-items: center; }
+.top-nav .version { font-size: 13px; color: var(--concrete); font-weight: 500; }
+.top-nav .status-pill { background: var(--blue); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 14px; border-radius: 20px; letter-spacing: 0.04em; }
+
+.tab-bar { position: sticky; top: var(--nav-height, 49px); z-index: 100; background: #fff; border-bottom: 1px solid var(--dust); display: flex; gap: 0; padding: 0 2rem; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tab-bar a { padding: 14px 20px; font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.04em; color: var(--concrete); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; }
+.tab-bar a:hover { color: var(--jet); }
+.tab-bar a.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+.expand-controls { position: sticky; top: var(--nav-tab-height, 98px); z-index: 99; background: var(--fog); border-bottom: 1px solid var(--dust); padding: 8px 2rem; display: flex; gap: 8px; }
+.expand-controls button { padding: 4px 14px; border-radius: 6px; border: 1px solid var(--dust); background: #fff; font-family: 'Roboto', sans-serif; font-size: 0.75rem; font-weight: 600; color: var(--shale); cursor: pointer; transition: border-color 0.2s; }
+.expand-controls button:hover { border-color: var(--blue); color: var(--blue); }
+
+.collapsible { margin: 0; }
+.collapsible summary { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 2rem 2rem 1rem; max-width: 1100px; margin: 0 auto; list-style: none; }
+.collapsible summary::-webkit-details-marker { display: none; }
+.collapsible summary h2 { margin-bottom: 0; }
+.toggle-icon { font-size: 0.875rem; color: var(--concrete); transition: transform 0.2s; }
+.collapsible[open] .toggle-icon { transform: rotate(90deg); }
+.collapsible .section-body { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+.callout { background: rgba(40, 64, 240, 0.04); border: 1px solid rgba(40, 64, 240, 0.15); border-radius: 12px; padding: 1.5rem 2rem; margin: 2rem 0; font-size: 0.9375rem; color: var(--shale); }
+.callout strong { color: var(--blue); }
+.callout.amber { background: rgba(212, 151, 10, 0.05); border-color: rgba(212, 151, 10, 0.2); }
+.callout.amber strong { color: var(--amber); }
+
+.severity-grid { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+.severity-box { border-radius: 12px; padding: 1.25rem 1.5rem; text-align: center; flex: 1; min-width: 100px; }
+.severity-box .sev-count { font-size: 2rem; font-weight: 800; display: block; }
+.severity-box .sev-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.severity-box.critical { background: rgba(220, 38, 38, 0.06); border: 1px solid rgba(220, 38, 38, 0.2); }
+.severity-box.critical .sev-count, .severity-box.critical .sev-label { color: #DC2626; }
+.severity-box.high-sev { background: rgba(232, 98, 10, 0.06); border: 1px solid rgba(232, 98, 10, 0.2); }
+.severity-box.high-sev .sev-count, .severity-box.high-sev .sev-label { color: var(--ember); }
+.severity-box.medium-sev { background: rgba(212, 151, 10, 0.06); border: 1px solid rgba(212, 151, 10, 0.2); }
+.severity-box.medium-sev .sev-count, .severity-box.medium-sev .sev-label { color: var(--amber); }
+.severity-box.low-sev { background: rgba(46, 125, 82, 0.06); border: 1px solid rgba(46, 125, 82, 0.2); }
+.severity-box.low-sev .sev-count, .severity-box.low-sev .sev-label { color: var(--sage); }
+.severity-box.info-sev { background: rgba(40, 64, 240, 0.06); border: 1px solid rgba(40, 64, 240, 0.2); }
+.severity-box.info-sev .sev-count, .severity-box.info-sev .sev-label { color: var(--blue); }
+
+.grade-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; padding: 0.5rem 0; }
+.grade-row.overall { border-top: 2px solid var(--dust); padding-top: 1rem; margin-top: 0.5rem; }
+.grade-label { min-width: 180px; font-size: 0.875rem; font-weight: 500; color: var(--shale); }
+.grade-letter { min-width: 40px; font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; font-weight: 700; text-align: center; }
+.grade-track { flex: 1; height: 8px; background: var(--fog); border-radius: 4px; overflow: hidden; }
+.grade-fill { height: 100%; border-radius: 4px; }
+
+.comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--dust); border-radius: 12px; overflow: hidden; margin: 2rem 0; }
+.comparison-col { padding: 2rem; }
+.comparison-col.before { background: rgba(232, 98, 10, 0.04); border-right: 1px solid var(--dust); }
+.comparison-col.after { background: rgba(40, 64, 240, 0.04); }
+.comparison-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; }
+.comparison-col.before h4 { color: var(--ember); }
+.comparison-col.after h4 { color: var(--blue); }
+.comparison-col ul { list-style: none; }
+.comparison-col ul li { padding: 0.5rem 0; font-size: 0.9375rem; color: var(--shale); border-bottom: 1px solid rgba(200, 205, 214, 0.2); }
+.comparison-col ul li:last-child { border-bottom: none; }
+
+.link-btn { display: inline-block; background: var(--blue); color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; margin-top: 1rem; }
+.link-btn:hover { background: #1a2fc8; }
+.link-btn.ghost { background: transparent; color: var(--blue); border: 1px solid var(--blue); }
+
+@media (max-width: 768px) {
+  .hero-stats { gap: 2rem; }
+  .risk-grid { grid-template-columns: 1fr; }
+  .comparison { grid-template-columns: 1fr; }
+  .comparison-col.before { border-right: none; border-bottom: 1px solid var(--dust); }
+  section { padding: 4rem 1.5rem; }
+  .tab-bar { padding: 0 16px; }
+  .collapsible summary { padding: 1.5rem 1.5rem 0.75rem; }
+  .collapsible .section-body { padding: 0 1.5rem 3rem; }
+  .severity-grid { flex-direction: column; }
+  .grade-label { min-width: 140px; }
+  .bar-label-wide { min-width: 160px; }
+}
+</style>
+</head>
+<body>
+
+<!-- CASE STUDY NOTICE -->
+<div class="case-study-notice">
+  <strong>Example audit</strong> &mdash; performed on the public demo repository
+  <a href="https://github.com/mncoleman/dovito-ad-display-demo" target="_blank" rel="noopener">mncoleman/dovito-ad-display-demo</a>
+  at commit <code>f6d21ca</code>. Reproduces the same methodology we apply to paid client engagements. All findings verifiable in the
+  <a href="https://github.com/mncoleman/dovito-ad-display-demo/tree/f6d21ca0b7d9cd98eaeedf7804c2a9b1adda9cec" target="_blank" rel="noopener">linked repo</a>
+  &middot; <a href="https://mncoleman.github.io/dovito-ad-display-demo/" target="_blank" rel="noopener">live demo</a>.
+</div>
+
+<!-- TOP NAV -->
+<div class="top-nav">
+  <h1>Codebase Audit Report</h1>
+  <div class="meta">
+    <span class="version">April 9, 2026</span>
+    <span class="status-pill">PUBLIC CASE STUDY</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="badge">Public Demo Audit</div>
+    <h1>Dovito Ad Display <span>Demo Audit</span></h1>
+    <p>Frontend-only static demo &ndash; architecture, code quality, security, performance, and SaaS-readiness assessment</p>
+    <p style="font-size: 1rem; color: var(--concrete); max-width: 700px; margin: -1.5rem auto 3rem;">A worked example of our standard audit methodology, applied to a public, backend-amputated demo of a digital signage platform. Every finding in this report can be reproduced by cloning the repo at the audited commit.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="number">13,700</span>
+        <span class="label">Lines of Code</span>
+      </div>
+      <div class="hero-stat">
+        <span class="number">75</span>
+        <span class="label">TS/TSX Files</span>
+      </div>
+      <div class="hero-stat">
+        <span class="number">19</span>
+        <span class="label">Security Findings</span>
+      </div>
+      <div class="hero-stat">
+        <span class="number">C</span>
+        <span class="label">Overall Grade</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar" id="nav">
+  <a href="#executive-summary">Executive Summary</a>
+  <a href="#system-overview">System Overview</a>
+  <a href="#code-quality">Code Quality</a>
+  <a href="#security">Security Findings</a>
+  <a href="#performance">Performance</a>
+  <a href="#saas-readiness">SaaS Readiness</a>
+  <a href="#cost-analysis">Cost Analysis</a>
+  <a href="#recommendations">Recommendations</a>
+</div>
+
+<div class="expand-controls">
+  <button onclick="document.querySelectorAll('.collapsible').forEach(d=>d.open=true)">Expand All</button>
+  <button onclick="document.querySelectorAll('.collapsible').forEach(d=>d.open=false)">Collapse All</button>
+</div>
+
+<!-- SECTION 1: EXECUTIVE SUMMARY -->
+<details class="collapsible" id="executive-summary" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 01</div>
+      <h2>Executive Summary</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">Context, purpose, and headline findings for the public demo audit.</p>
+
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The subject of this audit is <code>dovito-ad-display-demo</code> &mdash; a public, frontend-only fork of the Dovito Ad Display production codebase. Every server-side component (Postgres, NextAuth, Stripe, Supabase, Mailgun) has been surgically removed and replaced with an in-browser mock layer that intercepts <code>window.fetch</code> and persists state to <code>localStorage</code>. The demo exists to let prospects click through every screen of the product without requiring a real deployment. <strong>It is intentionally not a production system</strong>, and this audit evaluates it on those terms.</p>
+
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The codebase earns an overall grade of <strong>C</strong>. The frontend architecture is clean and idiomatic &mdash; modern Next.js 16 App Router, React 19, Tailwind 4, shadcn/ui, and React Query, all held together by a small (~1,100 LOC) mock layer that is genuinely well factored. TypeScript strict mode is enabled and there are zero <code>any</code> usages in the application source. Where the grade sags is in areas that simply cannot be fulfilled by a static demo: there are no tests, no error handling on mock API failure paths (because mock calls do not fail), no backend to secure, no monitoring, and no multi-tenant substrate. An honest assessment must score those categories near zero.</p>
+
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The three most notable strengths are: (1) a <strong>clean mock-layer abstraction</strong> &mdash; <code>mock-fetch.ts</code> patches <code>window.fetch</code> once, routes <code>/api/*</code> calls to a pure function in <code>mock-api.ts</code>, and all state mutations flow through a tiny <code>mock-store.ts</code> backed by <code>localStorage</code>; (2) <strong>strict TypeScript with zero escape hatches</strong> in application code; and (3) <strong>full surface coverage</strong> &mdash; 19 page routes and roughly 50 mocked endpoints faithfully reproduce the real product's user journeys, including the admin dashboard, the advertiser application flow, and the ad display kiosk.</p>
+
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The three most significant concerns &mdash; each of which would be critical on a real deployment and is acknowledged as intentional on the demo &mdash; are: (1) <strong>no auth enforcement whatsoever</strong>; anyone navigating to <code>/admin</code> is granted admin access and can observe all mocked data; (2) <strong>mock credentials are readable client-side by design</strong>; and (3) <strong>source maps and <code>next.config.ts</code>-disabled image optimization</strong> are shipped in production, which are real findings against the GitHub Pages deployment. On the SaaS-readiness dimension, the demo scores ~10% &mdash; not a failure, but a structural consequence of having no backend at all.</p>
+
+    <p style="color: var(--shale); margin-bottom: 1.5rem;">The replacement value of the frontend work, assessed conservatively, lands between <strong>$60K and $180K</strong> depending on team structure. Productising the demo into a real multi-tenant SaaS would require a further <strong>$150K&ndash;$300K</strong> of backend, auth, billing, and platform work on top.</p>
+
+    <div class="callout">
+      <strong>Why publish this?</strong> Our paid audits produce a client-facing report that the client rarely shares. This case study is identical in structure, scope, and methodology &mdash; the only difference is that the subject is a repository anyone can clone. When we tell a prospect "we'll deliver a report like <em>this</em>," this is the document we point to.
+    </div>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<!-- SECTION 2: SYSTEM OVERVIEW -->
+<details class="collapsible" id="system-overview" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 02</div>
+      <h2>System Overview</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">Technology stack, architecture, and codebase metrics at the audited commit.</p>
+
+    <div class="metric-grid">
+      <div class="metric-box"><span class="value">13,700</span><span class="metric-label">Lines of Code</span></div>
+      <div class="metric-box"><span class="value">75</span><span class="metric-label">TS/TSX Files</span></div>
+      <div class="metric-box"><span class="value">19</span><span class="metric-label">Page Routes</span></div>
+      <div class="metric-box"><span class="value">~50</span><span class="metric-label">Mock API Endpoints</span></div>
+      <div class="metric-box"><span class="value">33</span><span class="metric-label">Dependencies</span></div>
+      <div class="metric-box"><span class="value" style="color: var(--ember);">0</span><span class="metric-label">Tests</span></div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">Technology Stack</h3>
+    <table class="flow-table" style="margin-top: 1rem;">
+      <thead><tr><th>Layer</th><th>Technology</th><th>Version</th></tr></thead>
+      <tbody>
+        <tr><td>Framework</td><td>Next.js (App Router, static export)</td><td><code>16.1.7</code></td></tr>
+        <tr><td>UI Runtime</td><td>React</td><td><code>19.2.3</code></td></tr>
+        <tr><td>Language</td><td>TypeScript (strict mode)</td><td><code>5.x</code></td></tr>
+        <tr><td>Styling</td><td>Tailwind CSS + shadcn/ui</td><td><code>4.x</code></td></tr>
+        <tr><td>Data fetching</td><td>TanStack React Query</td><td><code>5.90</code></td></tr>
+        <tr><td>Forms / validation</td><td>react-hook-form + Zod</td><td><code>7.71 / 4.3</code></td></tr>
+        <tr><td>Animation</td><td>framer-motion</td><td><code>12.34</code></td></tr>
+        <tr><td>Mock persistence</td><td>browser <code>localStorage</code></td><td>&mdash;</td></tr>
+        <tr><td>Deployment</td><td>GitHub Pages (static)</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 3rem;">Architecture</h3>
+    <div class="arch-diagram" style="margin-top: 1rem;">
+      <div class="arch-layers">
+        <div class="arch-layer orchestrator">
+          <div class="layer-title blue">Presentation Layer</div>
+          <div class="layer-items">
+            <span class="layer-item blue-bg">Next.js 16 App Router</span>
+            <span class="layer-item blue-bg">React 19</span>
+            <span class="layer-item blue-bg">Tailwind 4</span>
+            <span class="layer-item blue-bg">shadcn/ui</span>
+            <span class="layer-item blue-bg">React Query</span>
+            <span class="layer-item blue-bg">react-hook-form + Zod</span>
+          </div>
+        </div>
+        <div class="flow-arrow">&#8595;</div>
+        <div class="arch-layer agents">
+          <div class="layer-title dark">Mock Service Layer</div>
+          <div class="layer-items">
+            <span class="layer-item dark-bg">mock-fetch.ts (window.fetch patch)</span>
+            <span class="layer-item dark-bg">mock-api.ts (router)</span>
+            <span class="layer-item dark-bg">mock-auth.ts (role inference)</span>
+            <span class="layer-item dark-bg">mock-store.ts (CRUD helpers)</span>
+          </div>
+        </div>
+        <div class="flow-arrow">&#8595;</div>
+        <div class="arch-layer infra">
+          <div class="layer-title grid">Persistence Layer</div>
+          <div class="layer-items">
+            <span class="layer-item grid-bg">localStorage (key: dovito-demo-v1)</span>
+            <span class="layer-item grid-bg">mock-data.ts (seed)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">What Was Removed</h3>
+    <p style="color: var(--shale); margin-bottom: 1rem;">Relative to the production codebase at <code>Dovito-Ad-Display-V2.0.0</code>, the demo strips:</p>
+    <table class="flow-table">
+      <thead><tr><th>Removed</th><th>Replaced With</th></tr></thead>
+      <tbody>
+        <tr><td>Next.js API routes (<code>src/app/api/*</code>)</td><td>Pure-function router in <code>mock-api.ts</code></td></tr>
+        <tr><td>PostgreSQL + Drizzle ORM</td><td><code>localStorage</code>-backed collections</td></tr>
+        <tr><td>NextAuth v5 (Google OAuth, credentials)</td><td>Email-prefix role inference in <code>mock-auth.ts</code></td></tr>
+        <tr><td>Stripe (Checkout, Elements, webhooks)</td><td>Fake card inputs in <code>collect-payment/page.tsx</code></td></tr>
+        <tr><td>Supabase Storage (image uploads)</td><td>Pre-seeded <code>/demo-images/</code> assets</td></tr>
+        <tr><td>Nodemailer / Mailgun</td><td>No-op success responses</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout amber" style="margin-top: 2rem;">
+      <strong>Demo-specific deviations from source.</strong> Two files were materially rewritten: <code>src/app/(public)/collect-payment/page.tsx</code> now renders a fake card form for the checkout walkthrough, and <code>src/app/(public)/apply/page.tsx</code> had its Stripe calls removed. All other changes are limited to the mock layer and deletions. The upstream <code>Dovito-Ad-Display-V2.0.0</code> repository was not modified.
+    </div>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<!-- SECTION 3: CODE QUALITY SCORECARD -->
+<details class="collapsible" id="code-quality" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 03</div>
+      <h2>Code Quality Scorecard</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">Letter grades across nine quality dimensions. Several dimensions are structurally capped by the static-demo constraint; we flag them rather than inflate them.</p>
+
+    <div style="margin-bottom: 3rem;">
+      <div class="grade-row"><span class="grade-label">Architecture</span><span class="grade-letter" style="color: var(--sage);">A-</span><div class="grade-track"><div class="grade-fill" style="width: 88%; background: var(--sage);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Code Consistency</span><span class="grade-letter" style="color: var(--sage);">B+</span><div class="grade-track"><div class="grade-fill" style="width: 82%; background: var(--sage);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Type Safety</span><span class="grade-letter" style="color: var(--sage);">A</span><div class="grade-track"><div class="grade-fill" style="width: 92%; background: var(--sage);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Error Handling</span><span class="grade-letter" style="color: var(--ember);">D</span><div class="grade-track"><div class="grade-fill" style="width: 30%; background: var(--ember);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Test Coverage</span><span class="grade-letter" style="color: var(--ember);">F</span><div class="grade-track"><div class="grade-fill" style="width: 2%; background: var(--ember);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Security</span><span class="grade-letter" style="color: var(--amber);">C-</span><div class="grade-track"><div class="grade-fill" style="width: 50%; background: var(--amber);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Performance</span><span class="grade-letter" style="color: var(--amber);">C+</span><div class="grade-track"><div class="grade-fill" style="width: 62%; background: var(--amber);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Documentation</span><span class="grade-letter" style="color: var(--sage);">B</span><div class="grade-track"><div class="grade-fill" style="width: 72%; background: var(--sage);"></div></div></div>
+      <div class="grade-row"><span class="grade-label">Developer Experience</span><span class="grade-letter" style="color: var(--sage);">B+</span><div class="grade-track"><div class="grade-fill" style="width: 80%; background: var(--sage);"></div></div></div>
+      <div class="grade-row overall"><span class="grade-label"><strong>Overall</strong></span><span class="grade-letter" style="color: var(--blue); font-size: 1rem;"><strong>C</strong></span><div class="grade-track"><div class="grade-fill" style="width: 58%; background: var(--blue);"></div></div></div>
+    </div>
+
+    <h3>Key Findings</h3>
+    <div class="card-grid" style="margin-top: 1rem;">
+      <div class="card">
+        <span class="pill sage">Strength</span>
+        <h4>Clean mock-layer abstraction</h4>
+        <p>The <code>mock-fetch.ts</code> / <code>mock-api.ts</code> / <code>mock-store.ts</code> triad totals ~1,100 LOC and implements a faithful, testable simulation of a REST backend. <code>window.fetch</code> is patched exactly once, <code>/api/*</code> is routed to a pure function, and every mutation flows through a single <code>insertOne/updateOne/deleteOne</code> set of helpers.</p>
+      </div>
+      <div class="card">
+        <span class="pill sage">Strength</span>
+        <h4>Zero <code>any</code> in application source</h4>
+        <p>An exhaustive grep of <code>src/</code> finds no <code>any</code> type annotations in application code. Four explicit <code>any</code> usages exist inside the mock layer itself where they are structurally justified (generic collection store, fetch interceptor body), each with an <code>eslint-disable</code> comment.</p>
+      </div>
+      <div class="card">
+        <span class="pill sage">Strength</span>
+        <h4>Strict TypeScript enabled</h4>
+        <p><code>tsconfig.json</code> has <code>"strict": true</code> with no escape flags. Combined with the absence of <code>any</code>, the type system is doing real work.</p>
+      </div>
+      <div class="card">
+        <span class="pill ember">Critical</span>
+        <h4>Zero test coverage</h4>
+        <p>No test files, no test runner, no CI gate. This inherits from the production codebase &mdash; which has the same gap &mdash; but on a demo repo the absence is felt less acutely because there is nothing to break beyond the UI.</p>
+      </div>
+      <div class="card">
+        <span class="pill ember">High</span>
+        <h4>No failure paths in mock API</h4>
+        <p>The mock router in <code>mock-api.ts</code> never returns an error &mdash; its fallback is a cheerful <code>{ success: true, demo: true }</code>. Code downstream of a React Query call therefore never exercises its error branch. This is a verifiable runtime bug for any consumer that reads error states, and it would become a real production bug if the mock layer were replaced with a real backend.</p>
+      </div>
+      <div class="card">
+        <span class="pill amber">Medium</span>
+        <h4>localStorage reads on every store access</h4>
+        <p><code>mock-store.ts</code> calls <code>load()</code> on every public helper, performing a synchronous <code>JSON.parse</code> of the entire store per operation. For a demo with a few hundred records this is invisible, but it is a pattern worth flagging because it will not scale if the store is reused elsewhere.</p>
+      </div>
+      <div class="card">
+        <span class="pill amber">Medium</span>
+        <h4>No error boundaries</h4>
+        <p>The app has no React error boundary components. An uncaught render error anywhere below the root layout will blank the entire page.</p>
+      </div>
+      <div class="card">
+        <span class="pill blue">Info</span>
+        <h4>Consistent component conventions</h4>
+        <p>39 components under <code>src/components/</code>, all using the same React Query + shadcn/ui + Tailwind idioms. Naming is consistent (kebab-case files, PascalCase exports). ESLint + Next ESLint config present.</p>
+      </div>
+      <div class="card">
+        <span class="pill blue">Info</span>
+        <h4>README is genuinely useful</h4>
+        <p>The repo README accurately describes the demo's provenance, the mock layer, and what was stripped out. Inline comments are sparse but the code is readable enough that this is not a red flag.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<!-- SECTION 4: SECURITY FINDINGS -->
+<details class="collapsible" id="security" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 04</div>
+      <h2>Security Findings</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">19 findings across 5 severity levels. Several findings are flagged as "intentional on demo, critical in production" &mdash; the point of listing them is to make explicit what a real deployment would need to address.</p>
+
+    <div class="severity-grid">
+      <div class="severity-box critical"><span class="sev-count">0</span><span class="sev-label">Critical</span></div>
+      <div class="severity-box high-sev"><span class="sev-count">2</span><span class="sev-label">High</span></div>
+      <div class="severity-box medium-sev"><span class="sev-count">6</span><span class="sev-label">Medium</span></div>
+      <div class="severity-box low-sev"><span class="sev-count">5</span><span class="sev-label">Low</span></div>
+      <div class="severity-box info-sev"><span class="sev-count">6</span><span class="sev-label">Info</span></div>
+    </div>
+
+    <h3 style="margin-top: 2rem;">High Severity Findings</h3>
+    <div class="risk-grid" style="margin-top: 1rem; grid-template-columns: 1fr;">
+      <div class="risk-card high">
+        <div class="risk-level">High &ndash; SEC-001</div>
+        <h4>Source maps shipped to production</h4>
+        <p><code>next.config.ts</code> does not disable source map generation for the static export, and at least one <code>.js.map</code> file is present under <code>out/_next/static/chunks/</code> in the deployed bundle. On a static GitHub Pages deployment this means the original TypeScript sources are trivially recoverable. On the demo this leaks nothing sensitive; on any real engagement it would leak the entire client-side codebase to adversaries.</p>
+      </div>
+      <div class="risk-card high">
+        <div class="risk-level">High &ndash; SEC-002</div>
+        <h4>No HTTP security headers on GitHub Pages</h4>
+        <p>GitHub Pages does not set <code>Content-Security-Policy</code>, <code>X-Frame-Options</code>, <code>Strict-Transport-Security</code>, <code>Referrer-Policy</code>, or <code>Permissions-Policy</code>. A static-export Next.js app cannot inject headers at runtime. For the demo this is acceptable; for any real deployment the app must be fronted by a CDN or edge worker capable of header injection.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">Medium Severity Findings</h3>
+    <table class="flow-table" style="margin-top: 1rem;">
+      <thead><tr><th>ID</th><th>Finding</th><th>File</th><th>Category</th></tr></thead>
+      <tbody>
+        <tr><td><code>SEC-003</code></td><td>No client-side auth enforcement: <code>/admin</code> is reachable by any visitor with full admin UI access</td><td><code>src/app/admin/page.tsx</code></td><td>AuthZ (intentional)</td></tr>
+        <tr><td><code>SEC-004</code></td><td>Role is inferred from email string containing "admin" or "super" &mdash; no password, no verification</td><td><code>src/lib/mock-auth.ts:13</code></td><td>AuthN (intentional)</td></tr>
+        <tr><td><code>SEC-005</code></td><td><code>target="_blank"</code> without <code>rel="noopener noreferrer"</code> exposes the opener window</td><td><code>src/components/navigation.tsx:187</code></td><td>Tabnabbing</td></tr>
+        <tr><td><code>SEC-006</code></td><td>Same issue on the in-app audit page link</td><td><code>src/app/audit/page.tsx:59</code></td><td>Tabnabbing</td></tr>
+        <tr><td><code>SEC-007</code></td><td>1 <strong>high</strong> severity npm advisory and 3 moderate advisories in the dependency tree</td><td><code>package-lock.json</code></td><td>Dependencies</td></tr>
+        <tr><td><code>SEC-008</code></td><td><code>localStorage</code> state is unencrypted, unsigned, and fully attacker-controllable. On a real app this would enable client-side privilege escalation.</td><td><code>src/lib/mock-store.ts</code></td><td>Data integrity (intentional)</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 3rem;">Low &amp; Info Findings</h3>
+    <table class="flow-table" style="margin-top: 1rem;">
+      <thead><tr><th>ID</th><th>Severity</th><th>Finding</th></tr></thead>
+      <tbody>
+        <tr><td><code>SEC-009</code></td><td>Low</td><td>Demo auth has no password field at all &mdash; anyone can "sign in" as any email, including fabricated admin/super emails.</td></tr>
+        <tr><td><code>SEC-010</code></td><td>Low</td><td>Mock fetch interceptor responds with HTTP 200 for every request, including unknown paths, which could mask UI bugs.</td></tr>
+        <tr><td><code>SEC-011</code></td><td>Low</td><td>Application form (<code>apply/page.tsx</code>) renders user-supplied text fields via React's default escaping &mdash; no <code>dangerouslySetInnerHTML</code>, no XSS risk observed.</td></tr>
+        <tr><td><code>SEC-012</code></td><td>Low</td><td>Coupon code <code>LAUNCH20</code> is hardcoded in <code>mock-api.ts:449</code>. Intentional for demo but would be a finding in production.</td></tr>
+        <tr><td><code>SEC-013</code></td><td>Low</td><td>Mock admin credentials and seeded users are visible in the client bundle. Intentional and documented in the README.</td></tr>
+        <tr><td><code>SEC-014</code></td><td>Info</td><td>No <code>process.env</code> secrets referenced in application source &mdash; the only usage is <code>NODE_ENV</code> in <code>src/app/audit/page.tsx</code> for basePath resolution. Clean.</td></tr>
+        <tr><td><code>SEC-015</code></td><td>Info</td><td>No <code>.env</code> file committed to the repository.</td></tr>
+        <tr><td><code>SEC-016</code></td><td>Info</td><td>No <code>dangerouslySetInnerHTML</code> anywhere in the codebase.</td></tr>
+        <tr><td><code>SEC-017</code></td><td>Info</td><td>No inline event handlers (<code>onclick=</code>) in rendered JSX &mdash; all handlers are typed React props.</td></tr>
+        <tr><td><code>SEC-018</code></td><td>Info</td><td>GitHub Pages serves over HTTPS with automatic certificate provisioning.</td></tr>
+        <tr><td><code>SEC-019</code></td><td>Info</td><td>No third-party analytics, tag managers, or trackers loaded in the client bundle.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="margin-top: 3rem;">
+      <strong>Honest disclosure:</strong> The production Dovito Ad Display codebase &mdash; from which this demo is forked &mdash; has a real auth layer, CSRF protection, magic-byte image validation, Stripe webhook signing, rate limiting, and server-side authorization. None of those are relevant to a frontend-only demo, so none appear in this audit. The findings above are strictly the ones that apply to the artifact as shipped on GitHub Pages.
+    </div>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<!-- SECTION 5: PERFORMANCE -->
+<details class="collapsible" id="performance" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 05</div>
+      <h2>Performance Assessment</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">Directional assessment across five frontend performance categories. Lighthouse was not executed; numbers are based on static-file inspection of the deployed <code>out/</code> directory.</p>
+
+    <div class="bar-chart" style="margin-bottom: 3rem;">
+      <div class="bar-row">
+        <span class="bar-label-wide">Bundle Size</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width: 55%;"></div></div>
+        <span class="bar-value">55%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label-wide">Rendering</span>
+        <div class="bar-track"><div class="bar-fill sage" style="width: 72%;"></div></div>
+        <span class="bar-value">72%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label-wide">Assets &amp; Images</span>
+        <div class="bar-track"><div class="bar-fill ember" style="width: 35%;"></div></div>
+        <span class="bar-value">35%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label-wide">Network</span>
+        <div class="bar-track"><div class="bar-fill sage" style="width: 80%;"></div></div>
+        <span class="bar-value">80%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-label-wide">Runtime</span>
+        <div class="bar-track"><div class="bar-fill amber" style="width: 60%;"></div></div>
+        <span class="bar-value">60%</span>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-box"><span class="value">2.2 MB</span><span class="metric-label">JS Chunks (uncompressed)</span></div>
+      <div class="metric-box"><span class="value">9.8 MB</span><span class="metric-label">Total <code>out/</code> directory</span></div>
+      <div class="metric-box"><span class="value">1</span><span class="metric-label">Source map shipped</span></div>
+      <div class="metric-box"><span class="value">Static</span><span class="metric-label">Hosting model</span></div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">Performance Findings</h3>
+    <div class="card-grid" style="margin-top: 1rem;">
+      <div class="card">
+        <span class="pill ember">Frontend</span>
+        <h4>Image optimization disabled</h4>
+        <p><code>next.config.ts</code> sets <code>images: { unoptimized: true }</code> because static export cannot use the Next image optimizer. Every <code>/demo-images/*.jpg</code> is served at its original size and format. This is a structural constraint of static export on GitHub Pages, not a bug.</p>
+      </div>
+      <div class="card">
+        <span class="pill amber">Frontend</span>
+        <h4>Bundle: 2.2MB of JS chunks</h4>
+        <p>The <code>out/_next/static/chunks/</code> directory is 2.2MB uncompressed across ~40 chunks. After gzip this is probably in the 600&ndash;800KB range &mdash; high but not extreme for a React 19 + framer-motion + radix-ui + React Query stack. No dynamic imports beyond Next.js route splitting.</p>
+      </div>
+      <div class="card">
+        <span class="pill amber">Runtime</span>
+        <h4>Synchronous localStorage on every mock call</h4>
+        <p>Each call through <code>mock-store.ts</code> does a full <code>JSON.parse</code> of the root store. For ~200 seed records this is microseconds, but it blocks the main thread and will scale poorly if the store grows.</p>
+      </div>
+      <div class="card">
+        <span class="pill amber">Runtime</span>
+        <h4>No memoization of expensive computations</h4>
+        <p>Spot-checks of the admin dashboard and analytics view show inline <code>.filter().sort()</code> chains in render bodies without <code>useMemo</code>. Not a bug &mdash; a finding worth flagging for growth.</p>
+      </div>
+      <div class="card">
+        <span class="pill sage">Network</span>
+        <h4>Static hosting means trivial CDN caching</h4>
+        <p>GitHub Pages serves every file with an ETag and modest cache headers. First paint after initial load is dominated by Next.js runtime and framer-motion, not network.</p>
+      </div>
+      <div class="card">
+        <span class="pill sage">Rendering</span>
+        <h4>React Query handles stale-while-revalidate well</h4>
+        <p>Default React Query configuration plus a 150ms artificial delay in the mock layer produces a convincing "real API" feel without blocking interactions.</p>
+      </div>
+      <div class="card">
+        <span class="pill elevation">Info</span>
+        <h4>Font loading via Google Fonts <code>&lt;link&gt;</code></h4>
+        <p>Fonts are loaded via preconnect + stylesheet, not <code>next/font</code>, because the deviation report audit pages predate the rest of the refactor. Low impact on a demo.</p>
+      </div>
+      <div class="card">
+        <span class="pill elevation">Info</span>
+        <h4>Single artificial latency constant</h4>
+        <p>Every mock call waits <code>DELAY_MS = 150</code>. Flat latency is unrealistic but serves the demo's purpose of showing skeletons and loading states.</p>
+      </div>
+    </div>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<!-- SECTION 6: SAAS READINESS -->
+<details class="collapsible" id="saas-readiness" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 06</div>
+      <h2>SaaS Readiness</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">Condensed scorecard. The full 7-dimension deep-dive is published as a separate report.</p>
+
+    <div class="metric-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div class="metric-box">
+        <span class="value" style="color: var(--ember);">10%</span>
+        <span class="metric-label">Overall SaaS Readiness</span>
+      </div>
+      <div class="metric-box">
+        <span class="value">7</span>
+        <span class="metric-label">Dimensions Assessed</span>
+      </div>
+      <div class="metric-box">
+        <span class="value">Full rebuild</span>
+        <span class="metric-label">Required for SaaS</span>
+      </div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">Readiness by Dimension</h3>
+    <div class="bar-chart" style="margin-top: 1rem;">
+      <div class="bar-row"><span class="bar-label-wide">Multi-Tenancy</span><div class="bar-track"><div class="bar-fill ember" style="width: 0%;"></div></div><span class="bar-value">0%</span></div>
+      <div class="bar-row"><span class="bar-label-wide">User Management</span><div class="bar-track"><div class="bar-fill ember" style="width: 5%;"></div></div><span class="bar-value">5%</span></div>
+      <div class="bar-row"><span class="bar-label-wide">Billing &amp; Subscriptions</span><div class="bar-track"><div class="bar-fill ember" style="width: 0%;"></div></div><span class="bar-value">0%</span></div>
+      <div class="bar-row"><span class="bar-label-wide">Customization</span><div class="bar-track"><div class="bar-fill amber" style="width: 30%;"></div></div><span class="bar-value">30%</span></div>
+      <div class="bar-row"><span class="bar-label-wide">API Design</span><div class="bar-track"><div class="bar-fill amber" style="width: 20%;"></div></div><span class="bar-value">20%</span></div>
+      <div class="bar-row"><span class="bar-label-wide">Onboarding</span><div class="bar-track"><div class="bar-fill amber" style="width: 15%;"></div></div><span class="bar-value">15%</span></div>
+      <div class="bar-row"><span class="bar-label-wide">Monitoring</span><div class="bar-track"><div class="bar-fill ember" style="width: 0%;"></div></div><span class="bar-value">0%</span></div>
+    </div>
+
+    <div class="callout" style="margin-top: 2rem;">
+      <strong>Even when the answer to "can this become a SaaS?" is "not without a full backend rebuild,"</strong> the structured gap analysis tells a prospect exactly what needs to be built and in what order. That is the deliverable, not the headline number.
+    </div>
+
+    <p style="margin-top: 2rem; text-align: center;">
+      <a class="link-btn" href="./saas-readiness-2026-04-09.html">Read the full SaaS Readiness Assessment &rarr;</a>
+    </p>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<!-- SECTION 7: COST ANALYSIS -->
+<details class="collapsible" id="cost-analysis" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 07</div>
+      <h2>Cost Analysis</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">Replacement value and team cost estimates for the 13.7K LOC frontend-only codebase. Methodology: industry-average productivity (roughly 10&ndash;15 LOC per engineer-hour including design, review, refactor), weighted by complexity.</p>
+
+    <div class="metric-grid">
+      <div class="metric-box"><span class="value">$100K</span><span class="metric-label">Mid-case Cost</span></div>
+      <div class="metric-box"><span class="value">~1,000</span><span class="metric-label">Development Hours</span></div>
+      <div class="metric-box"><span class="value">4&ndash;8 mo</span><span class="metric-label">Calendar Time</span></div>
+    </div>
+
+    <h3 style="margin-top: 3rem;">Engineering Cost by Rate</h3>
+    <table class="flow-table" style="margin-top: 1rem;">
+      <thead><tr><th>Scenario</th><th>Hourly Rate</th><th>Hours</th><th>Total Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Low (solo contractor / offshore)</td><td>$75/hr</td><td>800&ndash;1,000</td><td><strong>$60K &ndash; $75K</strong></td></tr>
+        <tr><td>Mid (US agency, mid-level)</td><td>$125/hr</td><td>800&ndash;1,200</td><td><strong>$100K &ndash; $150K</strong></td></tr>
+        <tr><td>High (senior / boutique firm)</td><td>$175/hr</td><td>800&ndash;1,200</td><td><strong>$140K &ndash; $210K</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 3rem;">Full Team Cost (Including Overhead)</h3>
+    <p style="color: var(--shale); font-size: 0.9375rem; margin-bottom: 1rem;">Overhead multiplier accounts for PM, QA, design, code review, meetings, and context switching.</p>
+    <table class="flow-table" style="margin-top: 1rem;">
+      <thead><tr><th>Company Stage</th><th>Multiplier</th><th>Mid-rate Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Solo / Founder</td><td>1.0x</td><td><strong>$100K</strong></td></tr>
+        <tr><td>Lean Startup</td><td>1.45x</td><td><strong>$145K</strong></td></tr>
+        <tr><td>Growth Company</td><td>2.2x</td><td><strong>$220K</strong></td></tr>
+        <tr><td>Enterprise</td><td>2.65x</td><td><strong>$265K</strong></td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top: 3rem;">Productisation Delta</h3>
+    <p style="color: var(--shale); font-size: 0.9375rem; margin-bottom: 1rem;">What it would cost, on top of the figures above, to turn the demo into a real multi-tenant SaaS: backend + database + auth + real Stripe integration + email + image storage + tenancy + monitoring. Detailed breakdown in the SaaS Readiness report.</p>
+    <table class="flow-table" style="margin-top: 1rem;">
+      <thead><tr><th>Scope</th><th>Low</th><th>Mid</th><th>High</th></tr></thead>
+      <tbody>
+        <tr><td>Backend + auth + DB + real payments + tenancy</td><td><strong>+$150K</strong></td><td><strong>+$220K</strong></td><td><strong>+$300K</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="margin-top: 3rem;">
+      <strong>Important framing:</strong> The demo's $60K&ndash;$180K replacement cost is <em>not</em> the cost of shipping the real Dovito Ad Display product. The production codebase is ~35% larger, includes a real backend, a real database, real Stripe integration, and real auth &mdash; its own cost analysis (in the companion audit dated April 6, 2026) puts it at <strong>$188K&ndash;$414K</strong>.
+    </div>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<!-- SECTION 8: RECOMMENDATIONS -->
+<details class="collapsible" id="recommendations" open>
+  <summary>
+    <div>
+      <div class="section-label">Section 08</div>
+      <h2>Recommendations &amp; Roadmap</h2>
+    </div>
+    <span class="toggle-icon">&#9654;</span>
+  </summary>
+  <div class="section-body">
+    <p class="section-desc">A phased roadmap for anyone taking this demo forward &mdash; whether as a reference artifact, an internal tool, or the seed of a real product.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot ember"></div>
+        <div class="timeline-phase" style="color: var(--ember);">Phase 1 &ndash; Immediate (days)</div>
+        <h3>Clean up the shipped artifact</h3>
+        <p>These fixes take hours, not weeks, and remove the honest-but-avoidable findings from this audit.</p>
+        <div class="timeline-tasks">
+          <span class="task-tag">Disable source maps in production build</span>
+          <span class="task-tag">Add <code>rel="noopener"</code> to 2 external links</span>
+          <span class="task-tag">Run <code>npm audit fix</code> for the high + moderate advisories</span>
+          <span class="task-tag">Add a root React error boundary</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot amber"></div>
+        <div class="timeline-phase" style="color: var(--amber);">Phase 2 &ndash; Short-term (weeks)</div>
+        <h3>Harden the demo as a reference artifact</h3>
+        <p>If the demo is going to keep earning its keep as a sales artifact, these changes make it more resilient and more useful.</p>
+        <div class="timeline-tasks">
+          <span class="task-tag">Add Vitest + a smoke test suite for mock routing</span>
+          <span class="task-tag">Simulate error responses in mock layer for at least 5% of calls</span>
+          <span class="task-tag">Memoize expensive admin dashboard computations</span>
+          <span class="task-tag">Front-load the store: single load + in-memory mirror, write-through to localStorage</span>
+          <span class="task-tag">Deploy behind a CDN that injects security headers</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot blue"></div>
+        <div class="timeline-phase" style="color: var(--blue);">Phase 3 &ndash; Medium-term (months)</div>
+        <h3>Productisation &mdash; if that is the goal</h3>
+        <p>Everything required to convert the demo into an actual SaaS. Detailed breakdown lives in the SaaS Readiness report.</p>
+        <div class="timeline-tasks">
+          <span class="task-tag">Real backend (Next API routes or separate service)</span>
+          <span class="task-tag">Postgres schema + migrations + ORM (reintroduce Drizzle)</span>
+          <span class="task-tag">NextAuth + role hierarchy + session management</span>
+          <span class="task-tag">Real Stripe integration + webhook verification</span>
+          <span class="task-tag">Tenant scoping in schema and query layer</span>
+          <span class="task-tag">Email transactional layer</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot sage"></div>
+        <div class="timeline-phase" style="color: var(--sage);">Phase 4 &ndash; Long-term (quarters)</div>
+        <h3>Platform features</h3>
+        <p>The work that lives beyond "it is a SaaS now" &mdash; monitoring, billing ergonomics, admin tooling.</p>
+        <div class="timeline-tasks">
+          <span class="task-tag">Structured logging + error tracking (Sentry)</span>
+          <span class="task-tag">Per-tenant branding and display customization</span>
+          <span class="task-tag">Usage analytics and billing portal</span>
+          <span class="task-tag">API keys for integrations</span>
+          <span class="task-tag">Self-service onboarding and invitations</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
+<div class="divider"><hr></div>
+
+<div class="footer">
+  <strong>Dovito Business Solutions</strong> &ndash; Public Case Study Audit &ndash; April 9, 2026<br>
+  Subject: <code>mncoleman/dovito-ad-display-demo</code> @ <code>f6d21ca</code>
+</div>
+
+<script>
+function setStickyOffsets() {
+  const nav = document.querySelector('.top-nav');
+  const tabBar = document.querySelector('.tab-bar');
+  const root = document.documentElement;
+  if (nav) {
+    const navH = nav.offsetHeight;
+    root.style.setProperty('--nav-height', navH + 'px');
+    if (tabBar) {
+      root.style.setProperty('--nav-tab-height', (navH + tabBar.offsetHeight) + 'px');
+    }
+  }
+}
+setStickyOffsets();
+window.addEventListener('resize', setStickyOffsets);
+
+const sections = document.querySelectorAll('details[id]');
+const navLinks = document.querySelectorAll('.tab-bar a');
+function updateActiveTab() {
+  const stickyOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-tab-height')) || 120;
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - stickyOffset - 20;
+    if (window.scrollY >= sectionTop) current = section.getAttribute('id');
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+}
+window.addEventListener('scroll', updateActiveTab);
+updateActiveTab();
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      if (target.tagName === 'DETAILS') target.open = true;
+      const stickyOffset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-tab-height')) || 100;
+      const top = target.getBoundingClientRect().top + window.scrollY - stickyOffset - 10;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>

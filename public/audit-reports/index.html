@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Example Platform Audit &ndash; Dovito Ad Display Demo</title>
+<meta name="description" content="A worked example of the Dovito codebase audit methodology, applied to a public demo repository. Two full reports + gap analysis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #2840F0;
+  --jet: #0C0C0F;
+  --ember: #E8620A;
+  --sage: #2E7D52;
+  --amber: #D4970A;
+  --shale: #3D4452;
+  --concrete: #7A8394;
+  --dust: #C8CDD6;
+  --fog: #EDEEF1;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { overflow-x: clip; }
+body { font-family: 'Roboto', -apple-system, sans-serif; background: #fff; color: var(--jet); line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 0.85em; background: var(--fog); padding: 2px 6px; border-radius: 4px; color: var(--blue); }
+
+.top-nav { background: var(--jet); color: #fff; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; }
+.top-nav h1 { font-size: 20px; font-weight: 700; }
+.top-nav .version { font-size: 13px; color: var(--concrete); }
+
+.hero { padding: 6rem 2rem 4rem; text-align: center; background: radial-gradient(ellipse at 50% 30%, rgba(40, 64, 240, 0.08) 0%, transparent 60%); }
+.hero .badge { display: inline-block; padding: 6px 16px; border: 1px solid rgba(40, 64, 240, 0.3); border-radius: 100px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 2rem; }
+.hero h1 { font-size: clamp(2.5rem, 5vw, 3.75rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 1.5rem; max-width: 900px; margin-left: auto; margin-right: auto; }
+.hero h1 span { color: var(--blue); }
+.hero p.lead { font-size: 1.25rem; color: var(--shale); max-width: 700px; margin: 0 auto; }
+
+section { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; }
+h2 { font-size: 2rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 1rem; }
+h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+p { color: var(--shale); margin-bottom: 1rem; }
+
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 2rem 0; }
+.stat { background: var(--fog); border: 1px solid var(--dust); border-radius: 12px; padding: 1.25rem; text-align: center; }
+.stat .num { font-size: 1.75rem; font-weight: 800; color: var(--blue); display: block; }
+.stat .num.ember { color: var(--ember); }
+.stat .num.amber { color: var(--amber); }
+.stat .lbl { font-size: 0.75rem; color: var(--concrete); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+
+.subject-card { background: var(--fog); border: 1px solid var(--dust); border-radius: 12px; padding: 2rem; margin: 2rem 0; }
+.subject-card .links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+.link-btn { display: inline-block; background: var(--blue); color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; }
+.link-btn:hover { background: #1a2fc8; text-decoration: none; }
+.link-btn.ghost { background: transparent; color: var(--blue); border: 1px solid var(--blue); }
+.link-btn.ghost:hover { background: rgba(40, 64, 240, 0.05); }
+
+.report-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+.report-card { background: #fff; border: 1px solid var(--dust); border-radius: 12px; padding: 2rem; transition: border-color 0.2s, transform 0.2s; display: block; color: inherit; }
+.report-card:hover { border-color: var(--blue); transform: translateY(-2px); text-decoration: none; }
+.report-card .label { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
+.report-card h3 { color: var(--jet); margin-bottom: 0.5rem; }
+.report-card p { font-size: 0.9375rem; color: var(--shale); margin-bottom: 1rem; }
+.report-card .cta { color: var(--blue); font-weight: 600; font-size: 0.875rem; }
+
+.methodology { list-style: none; counter-reset: phase; }
+.methodology li { counter-increment: phase; padding: 0.75rem 0 0.75rem 2.5rem; border-bottom: 1px solid var(--fog); position: relative; color: var(--shale); font-size: 0.9375rem; }
+.methodology li::before { content: counter(phase); position: absolute; left: 0; top: 0.85rem; width: 24px; height: 24px; border-radius: 50%; background: rgba(40, 64, 240, 0.1); color: var(--blue); font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; }
+.methodology li:last-child { border-bottom: none; }
+.methodology li strong { color: var(--jet); font-weight: 600; }
+
+.cta-section { background: var(--jet); color: #fff; padding: 5rem 2rem; text-align: center; margin-top: 4rem; }
+.cta-section h2 { color: #fff; }
+.cta-section p { color: var(--dust); max-width: 600px; margin: 1rem auto 2rem; }
+.cta-section .link-btn { background: var(--blue); }
+
+.footer { text-align: center; padding: 2rem; color: var(--concrete); font-size: 0.875rem; border-top: 1px solid var(--dust); }
+.footer strong { color: var(--jet); }
+
+@media (max-width: 768px) {
+  .report-grid { grid-template-columns: 1fr; }
+  section { padding: 3rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <h1>Dovito Audit Case Study</h1>
+  <span class="version">April 9, 2026</span>
+</div>
+
+<div class="hero">
+  <div class="badge">Public Case Study</div>
+  <h1>Example Platform Audit &mdash; <span>Dovito Ad Display Demo</span></h1>
+  <p class="lead">A worked example of our codebase audit methodology, applied to a public demo repository. Every finding is reproducible &mdash; just clone the repo and check.</p>
+</div>
+
+<section>
+  <div class="section-label">What this is</div>
+  <h2>A real audit on a public codebase</h2>
+  <p>Most of our client audits produce a report the client never shares. We wanted a version we <em>could</em> share &mdash; same structure, same methodology, same rigor &mdash; so prospects can read exactly what they will get when they hire us. The subject is a static, frontend-only fork of our Dovito Ad Display product, published as an open repository at <a href="https://github.com/mncoleman/dovito-ad-display-demo" target="_blank" rel="noopener"><code>mncoleman/dovito-ad-display-demo</code></a>.</p>
+  <p>Because the demo has been intentionally reduced to a single-page app backed by <code>localStorage</code>, some audit categories (multi-tenancy, billing, monitoring) score near zero. Rather than hide that, we wrote the report to make the gap analysis itself the deliverable. That framing is the point of this case study: even when the answer is "not yet," a structured assessment tells you exactly what to build and in what order.</p>
+</section>
+
+<section>
+  <div class="section-label">The subject</div>
+  <h2>About the demo</h2>
+  <div class="subject-card">
+    <p style="margin-bottom: 0.5rem;"><strong>Dovito Ad Display Demo</strong> &mdash; a Next.js 16 + React 19 + Tailwind 4 frontend-only fork of our digital signage platform. All <code>/api/*</code> calls are intercepted by a ~1,100 LOC mock layer that persists to <code>localStorage</code>. No backend, no database, no payment processor.</p>
+    <div class="stat-row">
+      <div class="stat"><span class="num">13,700</span><span class="lbl">Lines of Code</span></div>
+      <div class="stat"><span class="num">75</span><span class="lbl">TS/TSX Files</span></div>
+      <div class="stat"><span class="num">19</span><span class="lbl">Page Routes</span></div>
+      <div class="stat"><span class="num">~50</span><span class="lbl">Mock Endpoints</span></div>
+    </div>
+    <div class="links">
+      <a class="link-btn" href="https://mncoleman.github.io/dovito-ad-display-demo/" target="_blank" rel="noopener">Open the live demo</a>
+      <a class="link-btn ghost" href="https://github.com/mncoleman/dovito-ad-display-demo" target="_blank" rel="noopener">View on GitHub</a>
+      <a class="link-btn ghost" href="https://github.com/mncoleman/dovito-ad-display-demo/tree/f6d21ca0b7d9cd98eaeedf7804c2a9b1adda9cec" target="_blank" rel="noopener">Audited commit: f6d21ca</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Headline findings</div>
+  <h2>What the audit surfaced</h2>
+  <div class="stat-row" style="grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));">
+    <div class="stat"><span class="num">C</span><span class="lbl">Overall Grade</span></div>
+    <div class="stat"><span class="num ember">2</span><span class="lbl">High Findings</span></div>
+    <div class="stat"><span class="num amber">6</span><span class="lbl">Medium Findings</span></div>
+    <div class="stat"><span class="num ember">10%</span><span class="lbl">SaaS Readiness</span></div>
+    <div class="stat"><span class="num">$60&ndash;180K</span><span class="lbl">Replacement Cost</span></div>
+    <div class="stat"><span class="num">+$150&ndash;300K</span><span class="lbl">To Productise</span></div>
+  </div>
+  <p>Architecture, type safety, and consistency all grade high &mdash; the frontend is genuinely well built. Test coverage, error handling, and everything SaaS-adjacent score low, because they cannot be fulfilled by a static demo. The report is explicit about which findings are structural consequences of the demo's scope ("intentional here, critical in production") versus which are real fixable gaps.</p>
+</section>
+
+<section>
+  <div class="section-label">The reports</div>
+  <h2>Two full reports, linked</h2>
+  <div class="report-grid">
+    <a class="report-card" href="./audit-report-2026-04-09.html">
+      <div class="label">Report 01</div>
+      <h3>Platform Audit Report</h3>
+      <p>The main 8-section audit: executive summary, system overview, code quality scorecard, 19 security findings, performance assessment, SaaS summary, cost analysis, phased recommendations.</p>
+      <span class="cta">Read the full report &rarr;</span>
+    </a>
+    <a class="report-card" href="./saas-readiness-2026-04-09.html">
+      <div class="label">Report 02</div>
+      <h3>SaaS Readiness Assessment</h3>
+      <p>Standalone 7-dimension deep-dive: multi-tenancy, user management, billing, customization, API design, onboarding, monitoring. Component-by-component gap analysis and 4-phase conversion plan.</p>
+      <span class="cta">Read the full report &rarr;</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Methodology</div>
+  <h2>The eight phases</h2>
+  <p>Every Dovito codebase audit follows the same eight-phase process, whether the subject is this demo or a six-figure client engagement.</p>
+  <ul class="methodology">
+    <li><strong>Baseline metrics</strong> &mdash; LOC, file count, dependency graph, routes, endpoints, tests, commit SHA</li>
+    <li><strong>Architecture review</strong> &mdash; layering, abstractions, coupling, separation of concerns</li>
+    <li><strong>Code quality review</strong> &mdash; type safety, error handling, consistency, documentation, DX, letter grades across nine dimensions</li>
+    <li><strong>Security review</strong> &mdash; findings numbered SEC-NNN, categorised by severity (Critical / High / Medium / Low / Info), each with file:line and remediation</li>
+    <li><strong>Performance assessment</strong> &mdash; bundle, rendering, assets, network, runtime &mdash; directional scoring with cited evidence</li>
+    <li><strong>SaaS readiness</strong> &mdash; 7-dimension rubric, component-level gap analysis, implementation order</li>
+    <li><strong>Cost analysis</strong> &mdash; replacement value at three rate tiers, team cost with overhead multipliers, calendar time</li>
+    <li><strong>Recommendations &amp; roadmap</strong> &mdash; phased, priced, dependency-ordered plan</li>
+  </ul>
+</section>
+
+<div class="cta-section">
+  <h2>Book an audit for your codebase</h2>
+  <p>If the structure of this case study is what you want for your own system &mdash; client-facing report, reproducible findings, priced roadmap &mdash; we run the same process on paid engagements.</p>
+  <a class="link-btn" href="https://dovito.com" target="_blank" rel="noopener">dovito.com &rarr;</a>
+</div>
+
+<div class="footer">
+  <strong>Dovito Business Solutions</strong> &ndash; Public Case Study &ndash; April 9, 2026
+</div>
+</body>
+</html>
