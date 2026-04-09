@@ -96,7 +96,7 @@ export default function Navigation({ customNavItems }: NavigationProps = {}) {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 pt-4 px-6 lg:px-8">
+    <div className="fixed top-9 left-0 right-0 z-50 pt-4 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto px-6 relative flex justify-between items-center h-14">
         <motion.div
           className="flex items-center z-10 relative"
