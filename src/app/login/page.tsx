@@ -89,6 +89,60 @@ function LoginForm() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
+          <div className="rounded-md border border-yellow-300 bg-yellow-50 px-4 py-3 text-sm">
+            <p className="font-semibold text-yellow-900 mb-2">Demo mode — one-click sign-in</p>
+            <p className="text-yellow-800 mb-3 text-xs">No real password required. Click a role below to enter the demo as that user.</p>
+            <div className="grid grid-cols-1 gap-2">
+              <Button
+                type="button"
+                variant="default"
+                className="w-full justify-start text-left h-auto py-2"
+                onClick={() => {
+                  const u = mockAuth.signIn("super@dovito.com");
+                  toast.success("Signed in as super admin (demo)", { description: u.email });
+                  router.push("/admin");
+                }}
+                disabled={isLoading}
+              >
+                <div className="flex flex-col items-start">
+                  <span className="font-semibold">Super Admin</span>
+                  <span className="text-xs opacity-80">super@dovito.com</span>
+                </div>
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full justify-start text-left h-auto py-2"
+                onClick={() => {
+                  const u = mockAuth.signIn("admin@dovito.com");
+                  toast.success("Signed in as admin (demo)", { description: u.email });
+                  router.push("/admin");
+                }}
+                disabled={isLoading}
+              >
+                <div className="flex flex-col items-start">
+                  <span className="font-semibold">Admin</span>
+                  <span className="text-xs opacity-80">admin@dovito.com</span>
+                </div>
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full justify-start text-left h-auto py-2"
+                onClick={() => {
+                  const u = mockAuth.signIn("rosa@rosasbakery.com");
+                  toast.success("Signed in as user (demo)", { description: u.email });
+                  router.push("/dashboard");
+                }}
+                disabled={isLoading}
+              >
+                <div className="flex flex-col items-start">
+                  <span className="font-semibold">Regular User</span>
+                  <span className="text-xs opacity-80">rosa@rosasbakery.com</span>
+                </div>
+              </Button>
+            </div>
+          </div>
           {errorParam === "EmailNotVerified" && (
             <div className="rounded-md bg-yellow-50 border border-yellow-200 px-4 py-3 text-sm text-yellow-800">
               Please verify your email address before signing in. Check your inbox for the verification link.

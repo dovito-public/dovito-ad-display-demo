@@ -6,7 +6,15 @@ import type { User } from "./schema";
 type Listener = () => void;
 const listeners = new Set<Listener>();
 
+// Cache the snapshot so useSyncExternalStore gets a stable reference between
+// notifications. Without this, getSnapshot() returns a new object on every
+// call (because getCollection + .find produce new refs) and React enters an
+// infinite render loop (error #185).
+let cachedSnapshot: User | null = null;
+let snapshotDirty = true;
+
 function notify() {
+  snapshotDirty = true;
   listeners.forEach((l) => l());
 }
 
@@ -23,10 +31,16 @@ export const mockAuth = {
     return () => listeners.delete(listener);
   },
   getSnapshot(): User | null {
+    if (!snapshotDirty) return cachedSnapshot;
     const id = getCurrentUserId();
-    if (!id) return null;
-    const users = getCollection<User>("users");
-    return users.find((u) => u.id === id) || null;
+    if (!id) {
+      cachedSnapshot = null;
+    } else {
+      const users = getCollection<User>("users");
+      cachedSnapshot = users.find((u) => u.id === id) || null;
+    }
+    snapshotDirty = false;
+    return cachedSnapshot;
   },
   getServerSnapshot(): User | null {
     return null;
